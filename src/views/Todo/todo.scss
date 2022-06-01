@@ -1,0 +1,12 @@
+.todo-page {
+  padding-top: 1rem;
+
+  &__icon {
+    right: 0;
+    padding-right: 1rem;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
