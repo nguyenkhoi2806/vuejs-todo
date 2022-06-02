@@ -1,24 +1,31 @@
 <script setup>
-import Todo from "@/models/todo";
+import "./todo.scss";
+
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
-import { useTodoStore } from "../../stores/todo";
-import "./todo.scss";
-import TodoItem from "./TodoItem/index.vue";
 
+import Todo from "@/models/todo";
+
+import { useTodoStore } from "../../stores/todo";
+import TodoItem from "./TodoItem/index.vue";
 const { todoList, loading } = storeToRefs(useTodoStore());
+
+useTodoStore().$subscribe((mutation, state) => {
+  console.log(mutation);
+  console.log(state);
+});
 </script>
 <template>
   <div class="todo-page">
     <label class="block relative">
       <input
+        v-model="todoName"
         class="placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
         placeholder="Search for anything..."
         type="text"
         name="search"
-        @keyup.enter="submit"
-        v-model="todoName"
         required
+        @keyup.enter="submit"
       />
       <span class="todo-page__icon absolute inset-y-0 flex items-center pr-2">
         <svg
@@ -38,19 +45,19 @@ const { todoList, loading } = storeToRefs(useTodoStore());
     </label>
   </div>
   <p v-if="loading">Loading todo list...</p>
-  <div class="todo-list" v-if="todoList.length > 0">
+  <div v-if="todoList.length > 0" class="todo-list">
     <TodoItem
       v-for="(todo, index) in todoList"
+      :key="todo.id"
       :todo="todo"
       :index="index"
-      :key="todo.id"
     />
   </div>
 </template>
 
 <script>
 export default defineComponent({
-  name: "todo",
+  name: "Todo",
   components: {
     TodoItem,
   },

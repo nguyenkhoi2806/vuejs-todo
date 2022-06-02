@@ -21,3 +21,5 @@ export const useTodoStore = defineStore({
     },
   },
 });
+
+export default useTodoStore;
