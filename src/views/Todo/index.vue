@@ -2,18 +2,28 @@
 import "./todo.scss";
 
 import { storeToRefs } from "pinia";
+import { watch } from "vue";
 import { defineComponent } from "vue";
 
+import { TODO_LIST } from "@/constants/todo";
 import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/index.vue";
 const { todoList, loading } = storeToRefs(useTodoStore());
 
-useTodoStore().$subscribe((mutation, state) => {
-  console.log(mutation);
-  console.log(state);
-});
+watch(
+  () => todoList,
+  () => {
+    console.log(todoList);
+  }
+);
+// useTodoStore().$subscribe((mutation, _) => {
+//   const { events } = mutation;
+//   const { target } = events;
+//   console.log(target);
+//   localStorage.setItem(TODO_LIST, JSON.stringify(target));
+// });
 </script>
 <template>
   <div class="todo-page">
@@ -64,15 +74,19 @@ export default defineComponent({
   data() {
     return {
       todoName: "",
+      store: useTodoStore(),
     };
+  },
+
+  mounted() {
+    this.store.loadTodo();
   },
   methods: {
     submit() {
-      const todoStore = useTodoStore();
       const newTodo = new Todo({
         name: this.todoName,
       });
-      todoStore.addTodo(newTodo);
+      this.store.addTodo(newTodo);
       this.todoName = "";
     },
   },
