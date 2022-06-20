@@ -5,6 +5,8 @@
     <input
       type="checkbox"
       class="todo-item__checkbox appearance-none checked:bg-blue-500 w-4"
+      :checked="todo.status"
+      @click="updateStatus(todo.id)"
     />
     <div class="text-left w-11/12">
       <span class="todo-item__name">
@@ -18,6 +20,7 @@
       stroke="black"
       strokeWidth="{2}"
       class="todo-item__delete w-7"
+      @click="deleteTodo(todo.id)"
     >
       <path
         strokeLinecap="round"
@@ -32,8 +35,21 @@
 import Todo from "@/models/todo";
 
 export default {
+  name: "TodoItem",
   props: {
     todo: Todo,
+    deleteTodo: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
+    updateStatus: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
   },
 };
 </script>

@@ -2,7 +2,6 @@
 import "./todo.scss";
 
 import { storeToRefs } from "pinia";
-import { watch } from "vue";
 import { defineComponent } from "vue";
 
 import { TODO_LIST } from "@/constants/todo";
@@ -12,18 +11,18 @@ import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/index.vue";
 const { todoList, loading } = storeToRefs(useTodoStore());
 
-watch(
-  () => todoList,
-  () => {
-    console.log(todoList);
+const store = useTodoStore();
+store.$subscribe((mutation, state) => {
+  if (mutation.events.target) {
+    let todoList;
+    if (mutation.events.target.todoList) {
+      todoList = mutation.events.target.todoList;
+    } else {
+      todoList = mutation.events.target;
+    }
+    localStorage.setItem(TODO_LIST, JSON.stringify(todoList));
   }
-);
-// useTodoStore().$subscribe((mutation, _) => {
-//   const { events } = mutation;
-//   const { target } = events;
-//   console.log(target);
-//   localStorage.setItem(TODO_LIST, JSON.stringify(target));
-// });
+});
 </script>
 <template>
   <div class="todo-page">
@@ -58,9 +57,11 @@ watch(
   <div v-if="todoList.length > 0" class="todo-list">
     <TodoItem
       v-for="(todo, index) in todoList"
-      :key="todo.id"
+      :key="index"
       :todo="todo"
       :index="index"
+      :delete-todo="deleteTodo"
+      :update-status="updateStatus"
     />
   </div>
 </template>
@@ -77,7 +78,6 @@ export default defineComponent({
       store: useTodoStore(),
     };
   },
-
   mounted() {
     this.store.loadTodo();
   },
@@ -88,6 +88,12 @@ export default defineComponent({
       });
       this.store.addTodo(newTodo);
       this.todoName = "";
+    },
+    deleteTodo(id) {
+      this.store.removeTodo(id);
+    },
+    updateStatus(id) {
+      this.store.updateStatus(id);
     },
   },
 });
