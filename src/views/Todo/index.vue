@@ -95,6 +95,7 @@ export default defineComponent({
     updateStatus(id) {
       this.store.updateStatus(id);
     },
+    updateName() {},
   },
 });
 </script>
