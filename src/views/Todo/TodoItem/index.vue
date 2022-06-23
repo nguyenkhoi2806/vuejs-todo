@@ -3,15 +3,16 @@
     class="todo-item my-4 flex justify-between space-x-4 w-full text-center items-center"
   >
     <input
+      :id="todo.id"
+      :checked="todo.status"
       type="checkbox"
       class="todo-item__checkbox appearance-none checked:bg-blue-500 w-4"
-      :checked="todo.status"
       @click="updateStatus(todo.id)"
     />
     <div class="text-left w-11/12">
-      <span class="todo-item__name">
+      <label :for="todo.id" class="todo-item__name">
         {{ todo.name }}
-      </span>
+      </label>
     </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"

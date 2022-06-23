@@ -1,5 +1,6 @@
 interface ITodo {
   name: string;
+  status?: boolean;
 }
 
 class Todo implements ITodo {
@@ -9,7 +10,7 @@ class Todo implements ITodo {
   constructor(todo: ITodo) {
     this.id = Math.random();
     this.name = todo.name;
-    this.status = false;
+    this.status = todo.status ? todo.status : false;
   }
 }
 
