@@ -7,15 +7,18 @@
       :checked="todo.status"
       type="checkbox"
       class="todo-item__checkbox appearance-none checked:bg-blue-500 w-4"
-      @click="updateStatus(todo.id)"
+      @click="updateStatus(todo)"
     />
     <div class="text-left w-11/12">
       <input
         v-if="isUpdateName"
+        v-click-outside="onClickOutside"
         :value="todo.name"
         type="text"
-        onchange=""
+        :autofocus="todo.isFocus"
         class="h-2 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
+        @change="(event) => updateName(todo, event.target.value)"
+        @keypress="(event) => onPressEnter(event)"
       />
       <label v-if="!isUpdateName" :for="todo.id" class="todo-item__name">
         {{ todo.name }}
@@ -28,7 +31,7 @@
       stroke="currentColor"
       stroke-width="2"
       class="todo-item__delete w-7"
-      @click="onChangeUpdateName"
+      @click="shouldRenderInputName(todo)"
     >
       <path
         stroke-linecap="round"
@@ -75,16 +78,36 @@ export default {
         return;
       },
     },
+    updateName: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
+    updateAutoFocus: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
   },
-  data() {
+  data() { 
     return {
       isUpdateName: false,
     };
   },
   methods: {
-    onChangeUpdateName() {
-      console.log("ok");
+    shouldRenderInputName(todo) {
       this.isUpdateName = !this.isUpdateName;
+      this.updateAutoFocus(todo);
+    },
+    onPressEnter(event) {
+      if (event.key === "Enter") {
+        this.onChangeUpdateName();
+      }
+    },
+    onClickOutside() {
+      this.isUpdateName = false;
     },
   },
 };

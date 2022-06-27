@@ -29,7 +29,7 @@ store.$subscribe((mutation, state) => {
     <label class="block relative">
       <input
         v-model="todoName"
-        class="placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
+        class="placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
         placeholder="Search for anything..."
         type="text"
         name="search"
@@ -53,15 +53,20 @@ store.$subscribe((mutation, state) => {
       </span>
     </label>
   </div>
-  <p v-if="loading">Loading todo list...</p>
+  <p v-if="loading">
+    Loading todo list...
+  </p>
   <div v-if="todoList.length > 0" class="todo-list">
     <TodoItem
       v-for="(todo, index) in todoList"
       :key="index"
       :todo="todo"
       :index="index"
+      :autofocus="autofocus"
       :delete-todo="deleteTodo"
       :update-status="updateStatus"
+      :update-name="updateName"
+      :update-auto-focus="updateAutoFocus"
     />
   </div>
 </template>
@@ -76,6 +81,7 @@ export default defineComponent({
     return {
       todoName: "",
       store: useTodoStore(),
+      autofocus: false,
     };
   },
   mounted() {
@@ -90,12 +96,22 @@ export default defineComponent({
       this.todoName = "";
     },
     deleteTodo(id) {
-      this.store.removeTodo(id);
+      if (confirm("Are you sure to delete? ")) {
+        this.store.removeTodo(id);
+      }
     },
-    updateStatus(id) {
-      this.store.updateStatus(id);
+    updateStatus(todo) {
+      todo.status = !todo.status;
+      this.store.updateTodoList(todo);
     },
-    updateName() {},
+    updateName(todo, name) {
+      todo.name = name;
+      this.store.updateTodoList(todo);
+    },  
+    updateAutoFocus(todo) { 
+      todo.isFocus = !todo.isFocus;
+      this.store.updateTodoList(todo); 
+    },
   },
 });
 </script>
