@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { TODO_LIST } from "@/constants/todo";
+import { ALL, COMPLETED, TODO_LIST } from "@/constants/todo";
 import Todo from "@/models/todo";
 
 type TodoType = {
@@ -15,17 +15,15 @@ export const useTodoStore = defineStore({
       todoList: [],
       loading: false,
     } as TodoType),
-  getters: {},
   actions: {
     addTodo(todo: Todo) {
       if (!todo) {
         return;
       }
-
       this.todoList.push(todo);
     },
     removeTodo(todoId: number) {
-      this.todoList = this.todoList.filter((todo) => todo.id !== todoId);
+      this.todoList = this.todoList.filter((todo: Todo) => todo.id !== todoId);
     },
     loadTodo() {
       const todoList = localStorage.getItem(TODO_LIST);

@@ -4,7 +4,7 @@ import "./todo.scss";
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
-import { TODO_LIST, TODO_TAB } from "@/constants/todo";
+import { ALL, TODO_LIST, TODO_STATUS } from "@/constants/todo";
 import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
@@ -14,13 +14,13 @@ const { todoList, loading } = storeToRefs(useTodoStore());
 const store = useTodoStore();
 store.$subscribe((mutation, state) => {
   if (mutation.events.target) {
-    let todoList;
+    let newTodoList;
     if (mutation.events.target.todoList) {
-      todoList = mutation.events.target.todoList;
+      newTodoList = mutation.events.target.todoList;
     } else {
-      todoList = mutation.events.target;
+      newTodoList = mutation.events.target;
     }
-    localStorage.setItem(TODO_LIST, JSON.stringify(todoList));
+    localStorage.setItem(TODO_LIST, JSON.stringify(newTodoList));
   }
 });
 </script>
@@ -36,31 +36,6 @@ store.$subscribe((mutation, state) => {
         required
         @keyup.enter="submit"
       />
-      <ul
-        id="tabs-tab"
-        class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4"
-        role="tablist"
-      >
-        <li
-          v-for="(tab, index) in TODO_TAB"
-          :key="index"
-          class="nav-item"
-          role="presentation"
-        >
-          <a
-            id="tabs-home-tab"
-            class="nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent active"
-            data-bs-toggle="pill"
-            data-bs-target="#tabs-home"
-            role="tab"
-            aria-controls="tabs-home"
-            aria-selected="true"
-            :href="'#' + tab.id"
-          >
-            {{ tab.name }}
-          </a>
-        </li>
-      </ul>
       <span class="todo-page__icon absolute inset-y-0 flex items-center pr-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,6 +52,21 @@ store.$subscribe((mutation, state) => {
         </svg>
       </span>
     </label>
+    <div class="flex space-x-2 justify-space-between my-3">
+      <button
+        v-for="(status, index) in TODO_STATUS"
+        :key="index"
+        type="button"
+        class="px-6 py-2.5 font-medium text-xs leading-tight uppercase"
+        :class="{
+          'todo-status--active': status.value == statusActive,
+        }"
+        :onclick="() => onChangeStatus(status.value)"
+      >
+        {{ status.label }}
+      </button>
+    </div>
+    <div id="tabs-tabContent" class="tab-content"></div>
   </div>
   <p v-if="loading">Loading todo list...</p>
   <div v-if="todoList.length > 0" class="todo-list">
@@ -85,7 +75,6 @@ store.$subscribe((mutation, state) => {
       :key="index"
       :todo="todo"
       :index="index"
-      :autofocus="autofocus"
       :delete-todo="deleteTodo"
       :update-status="updateStatus"
       :update-name="updateName"
@@ -103,7 +92,7 @@ export default defineComponent({
     return {
       todoName: "",
       store: useTodoStore(),
-      autofocus: false,
+      statusActive: ALL,
     };
   },
   mounted() {
@@ -129,6 +118,9 @@ export default defineComponent({
     updateName(todo, name) {
       todo.name = name;
       this.store.updateTodoList(todo);
+    },
+    onChangeStatus(status) {
+      this.statusActive = status;
     },
   },
 });

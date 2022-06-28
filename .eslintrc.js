@@ -17,6 +17,7 @@ module.exports = {
     "vue/no-reserved-component-names": "off",
     "vue/html-self-closing": "off",
     "vue/max-attributes-per-line": "off",
+    "vue/singleline-html-element-content-newline": "off",
   },
   parserOptions: {
     parser: "@typescript-eslint/parser",

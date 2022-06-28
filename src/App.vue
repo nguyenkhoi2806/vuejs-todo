@@ -7,6 +7,7 @@
 
 <script>
 import "./assets/scss/global.scss";
+import "tw-elements";
 
 import HeaderApp from "./components/Header/index.vue";
 import Todo from "./views/Todo/index.vue";

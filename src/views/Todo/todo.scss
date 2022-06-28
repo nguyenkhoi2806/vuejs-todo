@@ -1,12 +1,23 @@
-.todo-page {
-  padding-top: 1rem;
+@import "../../assets/scss/common/variable.scss";
 
-  &__icon {
-    right: 0;
-    padding-right: 1rem;
+.todo {
+  &-page {
+    padding-top: 1rem;
+
+    &__icon {
+      right: 0;
+      padding-right: 1rem;
+    }
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
-  svg {
-    width: 20px;
-    height: 20px;
+
+  &-status {
+    &--active {
+      border-bottom: 1px solid $primary-color;
+      color: $primary-color;
+    }
   }
 }

@@ -16,7 +16,7 @@
         v-click-outside="onClickOutside"
         :value="todo.name"
         type="text"
-        class="h-2 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
+        class="h-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
         @change="(event) => updateName(todo, event.target.value)"
         @keypress="(event) => onPressEnter(event)"
       />
