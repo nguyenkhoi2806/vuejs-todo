@@ -4,7 +4,7 @@ import "./todo.scss";
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
-import { TODO_LIST } from "@/constants/todo";
+import { TODO_LIST, TODO_TAB } from "@/constants/todo";
 import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
@@ -36,6 +36,31 @@ store.$subscribe((mutation, state) => {
         required
         @keyup.enter="submit"
       />
+      <ul
+        id="tabs-tab"
+        class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4"
+        role="tablist"
+      >
+        <li
+          v-for="(tab, index) in TODO_TAB"
+          :key="index"
+          class="nav-item"
+          role="presentation"
+        >
+          <a
+            id="tabs-home-tab"
+            class="nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent active"
+            data-bs-toggle="pill"
+            data-bs-target="#tabs-home"
+            role="tab"
+            aria-controls="tabs-home"
+            aria-selected="true"
+            :href="'#' + tab.id"
+          >
+            {{ tab.name }}
+          </a>
+        </li>
+      </ul>
       <span class="todo-page__icon absolute inset-y-0 flex items-center pr-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
