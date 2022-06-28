@@ -29,23 +29,20 @@ export const useTodoStore = defineStore({
     },
     loadTodo() {
       const todoList = localStorage.getItem(TODO_LIST);
-      if (todoList) { 
+      if (todoList) {
         this.todoList = JSON.parse(todoList).map(
           (todo: Todo) => new Todo(todo)
         );
       }
     },
-    updateTodoList(todo: Todo) { 
+    updateTodoList(todo: Todo) {
       this.todoList = this.todoList.map((todoItem) => {
         if (todoItem.id === todo.id) {
           return todo;
-        } else {
-          todoItem.isFocus = false
         }
         return todoItem;
       });
     },
- 
   },
 });
 

@@ -12,17 +12,22 @@
     <div class="text-left w-11/12">
       <input
         v-if="isUpdateName"
+        ref="inputName"
         v-click-outside="onClickOutside"
         :value="todo.name"
         type="text"
-        :autofocus="todo.isFocus"
         class="h-2 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
         @change="(event) => updateName(todo, event.target.value)"
         @keypress="(event) => onPressEnter(event)"
       />
-      <label v-if="!isUpdateName" :for="todo.id" class="todo-item__name">
+      <label
+        v-if="!isUpdateName && todo.name"
+        :for="todo.id"
+        class="todo-item__name"
+      >
         {{ todo.name }}
       </label>
+      <i v-if="!todo.name && !isUpdateName"> No title </i>
     </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -84,30 +89,32 @@ export default {
         return;
       },
     },
-    updateAutoFocus: {
-      type: Function,
-      default() {
-        return;
-      },
-    },
   },
-  data() { 
+  data() {
     return {
       isUpdateName: false,
     };
   },
   methods: {
-    shouldRenderInputName(todo) {
+    shouldRenderInputName() {
       this.isUpdateName = !this.isUpdateName;
-      this.updateAutoFocus(todo);
+      this.focusOnInputName();
     },
     onPressEnter(event) {
       if (event.key === "Enter") {
-        this.onChangeUpdateName();
+        this.isUpdateName = !this.isUpdateName;
       }
     },
     onClickOutside() {
       this.isUpdateName = false;
+    },
+    focusOnInputName() {
+      this.$nextTick(() => {
+        const inputNameRef = this.$refs.inputName;
+        if (inputNameRef) {
+          inputNameRef.focus();
+        }
+      });
     },
   },
 };

@@ -53,9 +53,7 @@ store.$subscribe((mutation, state) => {
       </span>
     </label>
   </div>
-  <p v-if="loading">
-    Loading todo list...
-  </p>
+  <p v-if="loading">Loading todo list...</p>
   <div v-if="todoList.length > 0" class="todo-list">
     <TodoItem
       v-for="(todo, index) in todoList"
@@ -66,7 +64,6 @@ store.$subscribe((mutation, state) => {
       :delete-todo="deleteTodo"
       :update-status="updateStatus"
       :update-name="updateName"
-      :update-auto-focus="updateAutoFocus"
     />
   </div>
 </template>
@@ -107,10 +104,6 @@ export default defineComponent({
     updateName(todo, name) {
       todo.name = name;
       this.store.updateTodoList(todo);
-    },  
-    updateAutoFocus(todo) { 
-      todo.isFocus = !todo.isFocus;
-      this.store.updateTodoList(todo); 
     },
   },
 });
