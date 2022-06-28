@@ -66,11 +66,6 @@ store.$subscribe((mutation, state) => {
       :update-name="updateName"
     />
   </div>
-  <button
-    class="bg-dark hover:bg-blue-700 text-white text-center py-2 px-4 rounded"
-  >
-    All
-  </button>
 </template>
 
 <script>
