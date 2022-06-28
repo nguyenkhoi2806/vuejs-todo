@@ -6,8 +6,11 @@
 </template>
 
 <script>
+import "./assets/global.scss";
+
 import HeaderApp from "./components/Header/index.vue";
 import Todo from "./views/Todo/index.vue";
+
 export default {
   components: {
     HeaderApp,

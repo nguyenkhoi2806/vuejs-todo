@@ -30,7 +30,7 @@ store.$subscribe((mutation, state) => {
       <input
         v-model="todoName"
         class="placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
-        placeholder="Search for anything..."
+        placeholder="Add new todo"
         type="text"
         name="search"
         required
@@ -66,6 +66,11 @@ store.$subscribe((mutation, state) => {
       :update-name="updateName"
     />
   </div>
+  <button
+    class="bg-dark hover:bg-blue-700 text-white text-center py-2 px-4 rounded"
+  >
+    All
+  </button>
 </template>
 
 <script>
