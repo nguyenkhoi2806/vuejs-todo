@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { ALL, COMPLETED, TODO_LIST } from "@/constants/todo";
+import { COMPLETED, TODO_LIST, UNCOMPLETED } from "@/constants/todo";
 import Todo from "@/models/todo";
 
 type TodoType = {
@@ -15,6 +15,19 @@ export const useTodoStore = defineStore({
       todoList: [],
       loading: false,
     } as TodoType),
+  getters: {
+    filteredTodoByStatus: (state) => {
+      const { todoList } = state;
+      return (statusActive: string) => {
+        if (statusActive === COMPLETED) {
+          return todoList.filter((todo) => todo.status);
+        } else if (statusActive === UNCOMPLETED) {
+          return todoList.filter((todo) => !todo.status);
+        }
+        return todoList;
+      };
+    },
+  },
   actions: {
     addTodo(todo: Todo) {
       if (!todo) {

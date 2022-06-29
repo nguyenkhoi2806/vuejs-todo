@@ -9,7 +9,6 @@ import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/index.vue";
-const { todoList, loading } = storeToRefs(useTodoStore());
 
 const store = useTodoStore();
 store.$subscribe((mutation, state) => {
@@ -24,6 +23,55 @@ store.$subscribe((mutation, state) => {
   }
 });
 </script>
+
+<script>
+export default defineComponent({
+  name: "Todo",
+  components: {
+    TodoItem,
+  },
+  data() {
+    const store = useTodoStore();
+    const { todoList, loading } = storeToRefs(store);
+    store.loadTodo();
+
+    return {
+      filteredTodoByStatus: store.filteredTodoByStatus,
+      todoList,
+      todoName: "",
+      store: useTodoStore(),
+      statusActive: ALL,
+      loading,
+    };
+  },
+  methods: {
+    submit() {
+      const newTodo = new Todo({
+        name: this.todoName,
+      });
+      this.store.addTodo(newTodo);
+      this.todoName = "";
+    },
+    deleteTodo(id) {
+      if (confirm("Are you sure to delete? ")) {
+        this.store.removeTodo(id);
+      }
+    },
+    updateStatus(todo) {
+      todo.status = !todo.status;
+      this.store.updateTodoList(todo);
+    },
+    updateName(todo, name) {
+      todo.name = name;
+      this.store.updateTodoList(todo);
+    },
+    onChangeStatus(status) {
+      this.statusActive = status;
+    },
+  },
+});
+</script>
+
 <template>
   <div class="todo-page">
     <label class="block relative">
@@ -69,9 +117,9 @@ store.$subscribe((mutation, state) => {
     <div id="tabs-tabContent" class="tab-content"></div>
   </div>
   <p v-if="loading">Loading todo list...</p>
-  <div v-if="todoList.length > 0" class="todo-list">
+  <div v-if="filteredTodoByStatus(statusActive).length > 0" class="todo-list">
     <TodoItem
-      v-for="(todo, index) in todoList"
+      v-for="(todo, index) in filteredTodoByStatus(statusActive)"
       :key="index"
       :todo="todo"
       :index="index"
@@ -81,47 +129,3 @@ store.$subscribe((mutation, state) => {
     />
   </div>
 </template>
-
-<script>
-export default defineComponent({
-  name: "Todo",
-  components: {
-    TodoItem,
-  },
-  data() {
-    return {
-      todoName: "",
-      store: useTodoStore(),
-      statusActive: ALL,
-    };
-  },
-  mounted() {
-    this.store.loadTodo();
-  },
-  methods: {
-    submit() {
-      const newTodo = new Todo({
-        name: this.todoName,
-      });
-      this.store.addTodo(newTodo);
-      this.todoName = "";
-    },
-    deleteTodo(id) {
-      if (confirm("Are you sure to delete? ")) {
-        this.store.removeTodo(id);
-      }
-    },
-    updateStatus(todo) {
-      todo.status = !todo.status;
-      this.store.updateTodoList(todo);
-    },
-    updateName(todo, name) {
-      todo.name = name;
-      this.store.updateTodoList(todo);
-    },
-    onChangeStatus(status) {
-      this.statusActive = status;
-    },
-  },
-});
-</script>
