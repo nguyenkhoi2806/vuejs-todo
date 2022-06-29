@@ -1,6 +1,4 @@
 <script>
-import "./todo-item.scss";
-
 import Todo from "@/models/todo";
 
 export default {
