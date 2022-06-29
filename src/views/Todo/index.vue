@@ -1,47 +1,54 @@
-<script setup>
+<script>
 import "./todo.scss";
 
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
-import { ALL, TODO_LIST, TODO_STATUS } from "@/constants/todo";
+import {
+  ALL,
+  COMPLETED,
+  TODO_LIST,
+  TODO_STATUS,
+  UNCOMPLETED,
+} from "@/constants/todo";
 import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/index.vue";
 
-const store = useTodoStore();
-store.$subscribe((mutation, state) => {
-  if (mutation.events.target) {
-    let newTodoList;
-    if (mutation.events.target.todoList) {
-      newTodoList = mutation.events.target.todoList;
-    } else {
-      newTodoList = mutation.events.target;
-    }
-    localStorage.setItem(TODO_LIST, JSON.stringify(newTodoList));
-  }
-});
-</script>
-
-<script>
 export default defineComponent({
   name: "Todo",
   components: {
     TodoItem,
   },
-  data() {
+  setup() {
     const store = useTodoStore();
-    const { todoList, loading } = storeToRefs(store);
+    const { loading, todoList } = storeToRefs(store);
     store.loadTodo();
+    store.$subscribe((mutation, state) => {
+      if (mutation.events.target) {
+        let newTodoList;
+        if (mutation.events.target.todoList) {
+          newTodoList = mutation.events.target.todoList;
+        } else {
+          newTodoList = mutation.events.target;
+        }
+        localStorage.setItem(TODO_LIST, JSON.stringify(newTodoList));
+      }
+    });
 
     return {
-      filteredTodoByStatus: store.filteredTodoByStatus,
-      todoList,
-      todoName: "",
-      store: useTodoStore(),
-      statusActive: ALL,
+      store,
+      TODO_STATUS,
+      // filteredTodoByStatus: store.filteredTodoByStatus,
       loading,
+      todoList,
+    };
+  },
+  data() {
+    return {
+      todoName: "",
+      statusActive: ALL,
     };
   },
   methods: {
@@ -67,6 +74,14 @@ export default defineComponent({
     },
     onChangeStatus(status) {
       this.statusActive = status;
+    },
+    filteredTodoByStatus(todoList, statusActive) {
+      if (statusActive === COMPLETED) {
+        return todoList.filter((todo) => todo.status);
+      } else if (statusActive === UNCOMPLETED) {
+        return todoList.filter((todo) => !todo.status);
+      }
+      return todoList;
     },
   },
 });
@@ -117,9 +132,12 @@ export default defineComponent({
     <div id="tabs-tabContent" class="tab-content"></div>
   </div>
   <p v-if="loading">Loading todo list...</p>
-  <div v-if="filteredTodoByStatus(statusActive).length > 0" class="todo-list">
+  <div
+    v-if="filteredTodoByStatus(todoList, statusActive).length > 0"
+    class="todo-list"
+  >
     <TodoItem
-      v-for="(todo, index) in filteredTodoByStatus(statusActive)"
+      v-for="(todo, index) in filteredTodoByStatus(todoList, statusActive)"
       :key="index"
       :todo="todo"
       :index="index"

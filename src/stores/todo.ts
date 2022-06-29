@@ -15,19 +15,6 @@ export const useTodoStore = defineStore({
       todoList: [],
       loading: false,
     } as TodoType),
-  getters: {
-    filteredTodoByStatus: (state) => {
-      const { todoList } = state;
-      return (statusActive: string) => {
-        if (statusActive === COMPLETED) {
-          return todoList.filter((todo) => todo.status);
-        } else if (statusActive === UNCOMPLETED) {
-          return todoList.filter((todo) => !todo.status);
-        }
-        return todoList;
-      };
-    },
-  },
   actions: {
     addTodo(todo: Todo) {
       if (!todo) {
@@ -36,6 +23,7 @@ export const useTodoStore = defineStore({
       this.todoList.push(todo);
     },
     removeTodo(todoId: number) {
+      console.log(this.todoList.filter((todo: Todo) => todo.id !== todoId));
       this.todoList = this.todoList.filter((todo: Todo) => todo.id !== todoId);
     },
     loadTodo() {

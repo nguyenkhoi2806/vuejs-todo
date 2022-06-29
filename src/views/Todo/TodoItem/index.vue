@@ -1,3 +1,64 @@
+<script>
+import "./todo-item.scss";
+
+import Todo from "@/models/todo";
+
+export default {
+  name: "TodoItem",
+  props: {
+    todo: Todo,
+    deleteTodo: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
+    updateStatus: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
+    updateName: {
+      type: Function,
+      default() {
+        return;
+      },
+    },
+  },
+  data() {
+    return {
+      isUpdateName: false,
+    };
+  },
+  mounted() {
+    console.log(this.todo.status);
+  },
+  methods: {
+    shouldRenderInputName() {
+      this.isUpdateName = !this.isUpdateName;
+      this.focusOnInputName();
+    },
+    onPressEnter(event) {
+      if (event.key === "Enter") {
+        this.isUpdateName = !this.isUpdateName;
+      }
+    },
+    onClickOutside() {
+      this.isUpdateName = false;
+    },
+    focusOnInputName() {
+      this.$nextTick(() => {
+        const inputNameRef = this.$refs.inputName;
+        if (inputNameRef) {
+          inputNameRef.focus();
+        }
+      });
+    },
+  },
+};
+</script>
+
 <template>
   <div
     class="todo-item my-4 flex justify-between space-x-4 w-full text-center items-center"
@@ -61,61 +122,3 @@
     </svg>
   </div>
 </template>
-
-<script>
-import "./todo-item.scss";
-
-import Todo from "@/models/todo";
-
-export default {
-  name: "TodoItem",
-  props: {
-    todo: Todo,
-    deleteTodo: {
-      type: Function,
-      default() {
-        return;
-      },
-    },
-    updateStatus: {
-      type: Function,
-      default() {
-        return;
-      },
-    },
-    updateName: {
-      type: Function,
-      default() {
-        return;
-      },
-    },
-  },
-  data() {
-    return {
-      isUpdateName: false,
-    };
-  },
-  methods: {
-    shouldRenderInputName() {
-      this.isUpdateName = !this.isUpdateName;
-      this.focusOnInputName();
-    },
-    onPressEnter(event) {
-      if (event.key === "Enter") {
-        this.isUpdateName = !this.isUpdateName;
-      }
-    },
-    onClickOutside() {
-      this.isUpdateName = false;
-    },
-    focusOnInputName() {
-      this.$nextTick(() => {
-        const inputNameRef = this.$refs.inputName;
-        if (inputNameRef) {
-          inputNameRef.focus();
-        }
-      });
-    },
-  },
-};
-</script>
