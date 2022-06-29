@@ -9,8 +9,8 @@
 import "./assets/scss/global.scss";
 import "tw-elements";
 
-import HeaderApp from "./components/Header/index.vue";
-import Todo from "./views/Todo/index.vue";
+import HeaderApp from "./components/Header/Header.vue";
+import Todo from "./views/Todo/Todo.vue";
 
 export default {
   components: {
