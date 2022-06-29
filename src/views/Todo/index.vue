@@ -40,7 +40,6 @@ export default defineComponent({
     return {
       store,
       TODO_STATUS,
-      // filteredTodoByStatus: store.filteredTodoByStatus,
       loading,
       todoList,
     };
