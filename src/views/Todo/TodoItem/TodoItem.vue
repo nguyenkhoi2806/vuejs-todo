@@ -60,7 +60,7 @@ export default {
   >
     <input
       :id="todo.id"
-      :checked="todo.status"
+      :checked="todo.status" 
       type="checkbox"
       class="todo-item__checkbox appearance-none checked:bg-blue-500 w-4 outline-0"
       @click="updateStatus(todo)"
@@ -92,7 +92,7 @@ export default {
       stroke="currentColor"
       stroke-width="2"
       class="todo-item__delete w-7"
-      @click="shouldRenderInputName(todo)"
+      @click="shouldRenderInputName()"
     >
       <path
         stroke-linecap="round"

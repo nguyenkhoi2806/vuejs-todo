@@ -49,6 +49,18 @@ export default defineComponent({
       todoName: "",
       statusActive: ALL,
     };
+  }, 
+  computed: {
+    filteredTodoByStatus() {
+      const { todoList, statusActive } = this;
+
+      if (statusActive === COMPLETED) {
+        return todoList.filter((todo) => todo.status);
+      } else if (statusActive === UNCOMPLETED) {
+        return todoList.filter((todo) => !todo.status);
+      }
+      return todoList;
+    },
   },
   methods: {
     submit() {
@@ -74,15 +86,7 @@ export default defineComponent({
     onChangeStatus(status) {
       this.statusActive = status;
     },
-    filteredTodoByStatus(todoList, statusActive) {
-      if (statusActive === COMPLETED) {
-        return todoList.filter((todo) => todo.status);
-      } else if (statusActive === UNCOMPLETED) {
-        return todoList.filter((todo) => !todo.status);
-      }
-      return todoList;
-    },
-  },
+  }
 });
 </script>
 
@@ -127,16 +131,15 @@ export default defineComponent({
       >
         {{ status.label }}
       </button>
-    </div>
-    <div id="tabs-tabContent" class="tab-content"></div>
+    </div> 
   </div>
   <p v-if="loading">Loading todo list...</p>
   <div
-    v-if="filteredTodoByStatus(todoList, statusActive).length > 0"
+    v-if="filteredTodoByStatus.length > 0"
     class="todo-list"
   >
     <TodoItem
-      v-for="(todo, index) in filteredTodoByStatus(todoList, statusActive)"
+      v-for="(todo, index) in filteredTodoByStatus"
       :key="index"
       :todo="todo"
       :index="index"
