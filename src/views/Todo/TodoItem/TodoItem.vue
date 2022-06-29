@@ -31,9 +31,6 @@ export default {
       isUpdateName: false,
     };
   },
-  mounted() {
-    console.log(this.todo.status);
-  },
   methods: {
     shouldRenderInputName() {
       this.isUpdateName = !this.isUpdateName;

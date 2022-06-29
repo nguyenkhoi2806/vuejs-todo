@@ -23,7 +23,6 @@ export const useTodoStore = defineStore({
       this.todoList.push(todo);
     },
     removeTodo(todoId: number) {
-      console.log(this.todoList.filter((todo: Todo) => todo.id !== todoId));
       this.todoList = this.todoList.filter((todo: Todo) => todo.id !== todoId);
     },
     loadTodo() {

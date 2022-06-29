@@ -14,7 +14,7 @@ import {
 import Todo from "@/models/todo";
 
 import { useTodoStore } from "../../stores/todo";
-import TodoItem from "./TodoItem/index.vue";
+import TodoItem from "./TodoItem/TodoItem.vue";
 
 export default defineComponent({
   name: "Todo",
