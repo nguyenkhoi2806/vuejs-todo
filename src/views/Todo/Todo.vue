@@ -47,16 +47,16 @@ export default defineComponent({
   data() {
     return {
       todoName: "",
-      statusActive: ALL,
+      filterActive: ALL,
     };
-  }, 
+  },
   computed: {
     filteredTodoByStatus() {
-      const { todoList, statusActive } = this;
+      const { todoList, filterActive } = this;
 
-      if (statusActive === COMPLETED) {
+      if (filterActive === COMPLETED) {
         return todoList.filter((todo) => todo.status);
-      } else if (statusActive === UNCOMPLETED) {
+      } else if (filterActive === UNCOMPLETED) {
         return todoList.filter((todo) => !todo.status);
       }
       return todoList;
@@ -83,10 +83,10 @@ export default defineComponent({
       todo.name = name;
       this.store.updateTodoList(todo);
     },
-    onChangeStatus(status) {
-      this.statusActive = status;
+    onChangeFilter(filter) {
+      this.filterActive = filter;
     },
-  }
+  },
 });
 </script>
 
@@ -125,19 +125,16 @@ export default defineComponent({
         type="button"
         class="px-6 py-2.5 font-medium text-xs leading-tight uppercase"
         :class="{
-          'todo-status--active': status.value == statusActive,
+          'todo-status--active': status.value == filterActive,
         }"
-        :onclick="() => onChangeStatus(status.value)"
+        :onclick="() => onChangeFilter(status.value)"
       >
         {{ status.label }}
       </button>
-    </div> 
+    </div>
   </div>
   <p v-if="loading">Loading todo list...</p>
-  <div
-    v-if="filteredTodoByStatus.length > 0"
-    class="todo-list"
-  >
+  <div v-if="filteredTodoByStatus.length > 0" class="todo-list">
     <TodoItem
       v-for="(todo, index) in filteredTodoByStatus"
       :key="index"

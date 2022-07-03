@@ -4,7 +4,7 @@ import Todo from "@/models/todo";
 export default {
   name: "TodoItem",
   props: {
-    todo: Todo,
+    todo: Todo, 
     deleteTodo: {
       type: Function,
       default() {
@@ -63,7 +63,7 @@ export default {
       :checked="todo.status" 
       type="checkbox"
       class="todo-item__checkbox appearance-none checked:bg-blue-500 w-4 outline-0"
-      @click="updateStatus(todo)"
+      @change="updateStatus(todo)"
     />
     <div class="text-left w-11/12">
       <input
