@@ -17,7 +17,7 @@ export const useTodoStore = defineStore({
     } as TodoType),
   actions: {
     addTodo(todo: Todo) {
-      if (!todo) {
+      if (!todo || !todo.name) {
         return;
       }
       this.todoList.push(todo);
@@ -37,9 +37,13 @@ export const useTodoStore = defineStore({
       this.todoList = this.todoList.map((todoItem) => {
         if (todoItem.id === todo.id) {
           return todo;
+        } else {
+          return todoItem;
         }
-        return todoItem;
       });
+    },
+    resetTodoList() {
+      this.todoList = [];
     },
   },
 });

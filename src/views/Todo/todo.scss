@@ -20,4 +20,12 @@
       color: $primary-color;
     }
   }
+
+  &-list {
+    max-height: 500px;
+
+    &--scroll {
+      overflow-y: scroll;
+    }
+  }
 }

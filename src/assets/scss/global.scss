@@ -2,7 +2,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./common/variable.scss";
+
 body {
   font-family: "DIN Alternate", sans-serif;
   font-size: 16px;
+  background-color: $background-color;
 }

@@ -1,5 +1,7 @@
+@import "../../assets/scss/common/variable.scss";
+
 .header {
-  background-color: #2196f3;
+  background-color: $primary-color;
   min-height: 80px;
 
   h1 {
