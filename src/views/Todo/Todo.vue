@@ -75,7 +75,7 @@ export default defineComponent({
     },
     openShowConfirmModal(id) {
       this.shouldShowConfirm = true;
-      this.idDeleted = id;
+      this.todoSelected = this.todoList.find((todo) => todo.id === id);
       // if (confirm("Are you sure to delete? ")) {
       //   this.store.removeTodo(id);
       // }
@@ -97,7 +97,10 @@ export default defineComponent({
       }
     },
     deleteTodo() {
-      this.store.removeTodo(this.idDeleted);
+      this.store.removeTodo(this.todoSelected.id);
+      this.shouldShowConfirm = false;
+    },
+    closeModal() {
       this.shouldShowConfirm = false;
     },
   },
@@ -167,5 +170,11 @@ export default defineComponent({
   <div v-if="filteredTodoByStatus.length === 0">
     <i> Empty todo list </i>
   </div>
-  <ConfirmModal v-if="shouldShowConfirm" :on-confirm="deleteTodo" />
+  <ConfirmModal
+    v-if="shouldShowConfirm"
+    :on-confirm="deleteTodo"
+    :on-close="closeModal"
+    width="xs"
+    title="Are you sure to delete"
+  />
 </template>

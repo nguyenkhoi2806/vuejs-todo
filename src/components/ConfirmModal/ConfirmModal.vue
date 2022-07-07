@@ -32,54 +32,67 @@ export default {
         return null;
       },
     },
+    width: {
+      type: String,
+      default: "full",
+      validator: (value) =>
+        ["xs", "sm", "md", "lg", "full"].indexOf(value) !== -1,
+    },
+  },
+  computed: {
+    maxWidth() {
+      switch (this.width) {
+        case "xs":
+          return "max-w-lg";
+        case "sm":
+          return "max-w-xl";
+        case "md":
+          return "max-w-2xl";
+        case "lg":
+          return "max-w-3xl";
+        case "full":
+          return "max-w-full";
+        default:
+          return "max-w-full";
+      }
+    },
   },
 };
 </script>
 
 <template>
-  <!-- Modal -->
   <div
-    class="modal fade top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto show"
+    class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10"
   >
-    <div class="modal-dialog relative w-auto pointer-events-none">
-      <div
-        class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
-      >
-        <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md"
-        >
-          <h5
-            v-if="title"
-            class="text-xl font-medium leading-normal text-gray-800"
-          >
-            {{ title }}
-          </h5>
-          <button
-            type="button"
-            class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body relative p-4">{{ body }}</div>
-        <div
-          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md"
-        >
-          <button
-            type="button"
-            class="px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-            data-bs-dismiss="modal"
-            @click="onClose"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
-            @click="onConfirm"
-          >
-            {{ confirmText }}
-          </button>
+    <div
+      class="absolute w-full h-full bg-gray-900 opacity-50"
+      @click="onClose"
+    ></div>
+    <div class="absolute max-h-full max-w-xl w-full" :class="maxWidth">
+      <div class="container bg-white overflow-hidden md:rounded">
+        <div class="px-4 py-4 w-full">
+          <div class="max-h-full">
+            <div class="items-center mb-2">
+              <h3 class="font-semibold">{{ title }}</h3>
+              <div>
+                {{ body }}
+              </div>
+              <div class="text-right mt-4">
+                <button
+                  class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline"
+                  @click="onClose"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400"
+                  @click="onConfirm"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
