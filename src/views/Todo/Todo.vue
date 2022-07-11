@@ -174,7 +174,7 @@ export default defineComponent({
     v-if="shouldShowConfirm"
     :on-confirm="deleteTodo"
     :on-close="closeModal"
-    width="xs"
+    width="sm"
     title="Are you sure to delete"
   />
 </template>
