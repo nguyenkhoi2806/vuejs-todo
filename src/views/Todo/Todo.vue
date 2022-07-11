@@ -127,7 +127,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="w-full bg-blue-200 rounded-full mt-4 mb-4">
+  <div v-if="showProgress" class="w-full bg-blue-200 rounded-full mt-4">
     <div
       class="bg-blue-500 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
       :style="'width:' + percentTodoComplete + '%'"
