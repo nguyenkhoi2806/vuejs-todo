@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       isUpdateName: false,
-      moment
+      moment,
     };
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
           v-click-outside="onClickOutside"
           :value="todo.name"
           type="text"
-          class="h-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
+          class="px-2 h-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
           @change="(event) => updateName(todo, event.target.value)"
           @keypress="(event) => onPressEnter(event)"
         />
@@ -99,7 +99,9 @@ export default {
         </label>
         <i v-if="!todo.name && !isUpdateName"> No title </i>
       </div>
-      <p class="todo-item__time">{{ moment(todo.createdDate, 'MMMM Do YYYY, h:mm:ss a').fromNow() }}</p>
+      <p class="todo-item__time">
+        {{ moment(todo.createdDate, "MMMM Do YYYY, h:mm:ss a").fromNow() }}
+      </p>
     </div>
     <span class="todo-item__edit" @click="shouldRenderInputName()">
       <svg

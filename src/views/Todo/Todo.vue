@@ -14,6 +14,7 @@ import {
 import Todo from "@/models/todo";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.vue";
+import { useThemeStore } from "../../stores/theme";
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/TodoItem.vue";
 
@@ -24,10 +25,12 @@ export default defineComponent({
     ConfirmModal,
   },
   setup() {
-    const store = useTodoStore();
-    const { loading, todoList } = storeToRefs(store);
-    store.loadTodo();
-    store.$subscribe((mutation, _) => {
+    const todoStore = useTodoStore();
+    const themeStore = useThemeStore();
+    const { loading, todoList } = storeToRefs(todoStore);
+    const { showProgress } = storeToRefs(themeStore);
+    todoStore.loadTodo();
+    todoStore.$subscribe((mutation, _) => {
       if (mutation.events.target) {
         let newTodoList;
         if (mutation.events.target.todoList) {
@@ -40,10 +43,11 @@ export default defineComponent({
     });
 
     return {
-      store,
+      todoStore,
       TODO_STATUS,
       loading,
       todoList,
+      showProgress,
     };
   },
   data() {
@@ -65,13 +69,23 @@ export default defineComponent({
       }
       return todoList;
     },
+
+    percentTodoComplete() {
+      const { todoList } = this;
+      const todoCompleted = todoList.filter((todo) => todo.status);
+      if (todoCompleted.length > 0) {
+        return ((todoCompleted.length / todoList.length) * 100).toFixed(1);
+      }
+
+      return 0;
+    },
   },
   methods: {
     submit() {
       const newTodo = new Todo({
         name: this.todoName,
       });
-      this.store.addTodo(newTodo);
+      this.todoStore.addTodo(newTodo);
       this.todoName = "";
     },
     openShowConfirmModal(id) {
@@ -80,7 +94,7 @@ export default defineComponent({
         this.shouldShowConfirm = true;
         this.todoSelected = todoSelected;
         this.titleConfirmModal =
-          "Are you sure to delete <b>" + todoSelected.name + "</b>";
+          "Are you sure to delete " + todoSelected.name + "";
       }
     },
     updateStatus(todo) {
@@ -89,7 +103,7 @@ export default defineComponent({
     },
     updateName(todo, name) {
       todo.name = name;
-      this.store.updateTodoList(todo);
+      this.todoStore.updateTodoList(todo);
     },
     onChangeFilter(filter) {
       this.filterActive = filter;
@@ -99,10 +113,10 @@ export default defineComponent({
       this.shouldShowConfirm = true;
     },
     deleteAllTodo() {
-      this.store.resetTodoList();
+      this.todoStore.resetTodoList();
     },
     deleteTodo() {
-      this.store.removeTodo(this.todoSelected.id);
+      this.todoStore.removeTodo(this.todoSelected.id);
       this.shouldShowConfirm = false;
     },
     closeModal() {
@@ -113,11 +127,19 @@ export default defineComponent({
 </script>
 
 <template>
+  <div class="w-full bg-blue-200 rounded-full mt-4 mb-4">
+    <div
+      class="bg-blue-500 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+      :style="'width:' + percentTodoComplete + '%'"
+    >
+      {{ percentTodoComplete }}%
+    </div>
+  </div>
   <div class="todo-page">
     <label class="flex flex-row justify-between">
       <input
         v-model="todoName"
-        class="placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm w-10/12"
+        class="px-3 placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm w-10/12"
         placeholder="Add new todo"
         type="text"
         name="search"

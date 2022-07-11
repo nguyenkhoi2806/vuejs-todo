@@ -1,7 +1,10 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: ["./src/**/*.{html,vue}"],
+  content: [
+    "./src/**/*.{html,vue}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
   theme: {
     container: {
       center: true,
@@ -22,5 +25,5 @@ module.exports = {
       sans: ["Graphik", "sans-serif"],
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("tw-elements/dist/plugin")],
 };

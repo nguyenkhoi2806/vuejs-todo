@@ -1,7 +1,6 @@
 <script>
 export default {
   name: "Modal",
-  slots: `...`,
   props: {
     title: {
       type: String,
@@ -56,7 +55,7 @@ export default {
         <div class="px-4 py-4 w-full">
           <div class="max-h-full">
             <div class="items-center mb-2">
-              <h3 class="font-semibold">{{ title }}</h3>
+              <h3>{{ title }}</h3>
             </div>
             <slot></slot>
           </div>
