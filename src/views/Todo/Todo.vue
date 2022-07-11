@@ -52,6 +52,7 @@ export default defineComponent({
       filterActive: ALL,
       shouldShowConfirm: false,
       idDeleted: null,
+      titleConfirmModal: "",
     };
   },
   computed: {
@@ -74,11 +75,13 @@ export default defineComponent({
       this.todoName = "";
     },
     openShowConfirmModal(id) {
-      this.shouldShowConfirm = true;
-      this.todoSelected = this.todoList.find((todo) => todo.id === id);
-      // if (confirm("Are you sure to delete? ")) {
-      //   this.store.removeTodo(id);
-      // }
+      const todoSelected = this.todoList.find((todo) => todo.id === id);
+      if (todoSelected) {
+        this.shouldShowConfirm = true;
+        this.todoSelected = todoSelected;
+        this.titleConfirmModal =
+          "Are you sure to delete <b>" + todoSelected.name + "</b>";
+      }
     },
     updateStatus(todo) {
       todo.status = !todo.status;
@@ -91,10 +94,12 @@ export default defineComponent({
     onChangeFilter(filter) {
       this.filterActive = filter;
     },
-    deleteAll() {
-      if (confirm("Are you sure to delete all? ")) {
-        this.store.resetTodoList();
-      }
+    showConfirmDeleteAll() {
+      this.titleConfirmModal = "Are you sure to delete all? ";
+      this.shouldShowConfirm = true;
+    },
+    deleteAllTodo() {
+      this.store.resetTodoList();
     },
     deleteTodo() {
       this.store.removeTodo(this.todoSelected.id);
@@ -142,8 +147,9 @@ export default defineComponent({
         </button>
       </div>
       <button
+        v-if="todoList.length > 0"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-2 rounded"
-        @click="deleteAll"
+        @click="showConfirmDeleteAll"
       >
         Delete all
       </button>
@@ -174,7 +180,7 @@ export default defineComponent({
     v-if="shouldShowConfirm"
     :on-confirm="deleteTodo"
     :on-close="closeModal"
+    :title="titleConfirmModal"
     width="sm"
-    title="Are you sure to delete"
   />
 </template>
