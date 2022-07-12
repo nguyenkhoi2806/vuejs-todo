@@ -2,7 +2,7 @@
 import "./todo.scss";
 
 import { storeToRefs } from "pinia";
-import { defineComponent } from "vue";
+import { defineComponent, watch } from "vue";
 
 import {
   ALL,
@@ -30,7 +30,8 @@ export default defineComponent({
     const { loading, todoList } = storeToRefs(todoStore);
     const { showProgress } = storeToRefs(themeStore);
     todoStore.loadTodo();
-    todoStore.$subscribe((mutation, _) => {
+
+    todoStore.$subscribe((mutation, state) => {
       if (mutation.events.target) {
         let newTodoList;
         if (mutation.events.target.todoList) {
@@ -99,7 +100,7 @@ export default defineComponent({
     },
     updateStatus(todo) {
       todo.status = !todo.status;
-      this.store.updateTodoList(todo);
+      this.todoStore.updateTodoList(todo);
     },
     updateName(todo, name) {
       todo.name = name;
