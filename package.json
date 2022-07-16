@@ -1,6 +1,7 @@
 {
   "name": "todovuejs",
   "version": "0.0.0",
+  "homepage": "https://nguyenkhoi2806.github.io/vuejs-todo/",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -8,12 +9,15 @@
     "test:unit": "vitest --environment jsdom",
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "predeploy": "vue-tsc --noEmit && vite build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "click-outside-vue3": "^4.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "gh-pages": "^4.0.0",
     "moment": "^2.29.3",
     "pinia": "^2.0.13",
     "tw-elements": "^1.0.0-alpha12",
