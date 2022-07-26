@@ -6,6 +6,7 @@ import eslintPlugin from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), eslintPlugin()],
+  base: "/vuejs-todo/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
