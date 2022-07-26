@@ -205,5 +205,6 @@ export default defineComponent({
     :on-close="closeModal"
     :title="titleConfirmModal"
     width="sm"
+    confirm-text="Delete"
   />
 </template>
