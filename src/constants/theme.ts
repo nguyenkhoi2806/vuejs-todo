@@ -1,18 +1,21 @@
-import type { ITheme } from "@/models/theme";
+import type { Theme } from "@/models/theme";
 
-export const THEME_DEFAULT = <ITheme>{
-  backgroundColor: "blue",
+export const THEME_DEFAULT = <Theme>{
+  backgroundColor: "blue-500",
   textColor: "white",
+  name: "Blue",
 };
 
 export const THEME_DATA = [
   THEME_DEFAULT,
   {
-    backgroundColor: "red",
+    backgroundColor: "red-500",
     textColor: "white",
+    name: "Red",
   },
   {
-    backgroundColor: "gray",
+    backgroundColor: "gray-300",
     textColor: "black",
+    name: "Gray",
   },
-];
+] as Theme[];

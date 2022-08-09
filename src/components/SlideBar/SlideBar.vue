@@ -1,6 +1,7 @@
 <script>
 import { storeToRefs } from "pinia";
 
+import { THEME_DATA } from "../../constants/theme";
 import { useThemeStore } from "../../stores/theme";
 
 export default {
@@ -26,6 +27,7 @@ export default {
     return {
       store,
       showProgress,
+      themes: THEME_DATA,
     };
   },
   methods: {
@@ -47,15 +49,8 @@ export default {
   >
     <div class="justify-between flex border-b">
       <div class="flex items-center py-3">
-        <div class="shrink-0">
-          <img
-            src="https://visualpharm.com/assets/699/More%20Info-595b40b65ba036ed117d36d4.svg"
-            class="rounded-full w-10"
-            alt="Avatar"
-          />
-        </div>
         <div class="grow ml-3">
-          <p class="text-sm font-semibold">Hello</p>
+          <p class="text-sm font-semibold text-gray-800">Settings</p>
         </div>
       </div>
       <button class="items-center p-4 text-red" @click="onClose">
@@ -79,6 +74,26 @@ export default {
           >
             Show Progress
           </label>
+        </div>
+      </div>
+    </div>
+    <div class="mt-5">
+      <div class="pl-4 mb-3 w-full pr-3">
+        <label class="mb-3 mt-3 inline-block"> Themes </label>
+        <div class="flex justify-between">
+          <p
+            v-for="(theme, index) in themes"
+            :key="index"
+            class="flex flex-col justify-center text-center"
+          >
+            <span
+              class="w-5 rounded-full px-4 py-4 mb-3"
+              :class="'bg-' + theme.backgroundColor"
+            ></span>
+            <span :class="'text-' + theme.backgroundColor">
+              {{ theme.name }}
+            </span>
+          </p>
         </div>
       </div>
     </div>

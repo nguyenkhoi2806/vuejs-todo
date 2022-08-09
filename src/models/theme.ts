@@ -1,4 +1,5 @@
-export interface ITheme {
+export interface Theme {
   backgroundColor: String;
   textColor: String;
+  name: String;
 }
