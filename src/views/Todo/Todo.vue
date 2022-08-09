@@ -2,7 +2,7 @@
 import "./todo.scss";
 
 import { storeToRefs } from "pinia";
-import { defineComponent, watch } from "vue";
+import { defineComponent } from "vue";
 
 import {
   ALL,
@@ -58,6 +58,7 @@ export default defineComponent({
       shouldShowConfirm: false,
       idDeleted: null,
       titleConfirmModal: "",
+      isDeleteAll: false,
     };
   },
   computed: {
@@ -112,16 +113,25 @@ export default defineComponent({
     showConfirmDeleteAll() {
       this.titleConfirmModal = "Are you sure to delete all? ";
       this.shouldShowConfirm = true;
+      this.isDeleteAll = true;
     },
     deleteAllTodo() {
       this.todoStore.resetTodoList();
     },
     deleteTodo() {
       this.todoStore.removeTodo(this.todoSelected.id);
+    },
+    submitConfirmDelete() {
+      if (this.isDeleteAll) {
+        this.deleteAllTodo();
+      } else {
+        this.deleteTodo();
+      }
       this.shouldShowConfirm = false;
     },
     closeModal() {
       this.shouldShowConfirm = false;
+      this.isDeleteAll = false;
     },
   },
 });
@@ -201,7 +211,7 @@ export default defineComponent({
   </div>
   <ConfirmModal
     v-if="shouldShowConfirm"
-    :on-confirm="deleteTodo"
+    :on-confirm="submitConfirmDelete"
     :on-close="closeModal"
     :title="titleConfirmModal"
     width="sm"
