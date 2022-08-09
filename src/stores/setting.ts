@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 
 import { THEME_DEFAULT } from "@/constants/theme";
-import type { ITheme } from "@/models/theme";
+import type { Theme } from "@/models/theme";
 
 type ThemeType = {
   showProgress: boolean;
-  theme: ITheme;
+  theme: Theme;
 };
 
-export const useThemeStore = defineStore({
+export const useSettingStore = defineStore({
   id: "theme",
   state: () =>
     ({
@@ -22,4 +22,4 @@ export const useThemeStore = defineStore({
   },
 });
 
-export default useThemeStore;
+export default useSettingStore;

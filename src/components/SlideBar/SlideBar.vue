@@ -1,8 +1,10 @@
 <script>
+import "./slide-bar.scss";
+
 import { storeToRefs } from "pinia";
 
 import { THEME_DATA } from "../../constants/theme";
-import { useThemeStore } from "../../stores/theme";
+import { useSettingStore } from "../../stores/setting";
 
 export default {
   name: "SlideBar",
@@ -21,7 +23,7 @@ export default {
     },
   },
   setup() {
-    const store = useThemeStore();
+    const store = useSettingStore();
     const { showProgress } = storeToRefs(store);
 
     return {
@@ -84,7 +86,7 @@ export default {
           <p
             v-for="(theme, index) in themes"
             :key="index"
-            class="flex flex-col justify-center text-center"
+            class="flex flex-col justify-center text-center theme theme--selected rounded p-2 w-18"
           >
             <span
               class="w-5 rounded-full px-4 py-4 mb-3"

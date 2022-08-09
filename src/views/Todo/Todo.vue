@@ -14,7 +14,7 @@ import {
 import Todo from "@/models/todo";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.vue";
-import { useThemeStore } from "../../stores/theme";
+import { useSettingStore } from "../../stores/setting";
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/TodoItem.vue";
 
@@ -26,9 +26,9 @@ export default defineComponent({
   },
   setup() {
     const todoStore = useTodoStore();
-    const themeStore = useThemeStore();
+    const settingStore = useSettingStore();
     const { loading, todoList } = storeToRefs(todoStore);
-    const { showProgress } = storeToRefs(themeStore);
+    const { showProgress } = storeToRefs(settingStore);
     todoStore.loadTodo();
 
     todoStore.$subscribe((mutation, state) => {
