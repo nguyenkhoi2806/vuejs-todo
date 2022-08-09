@@ -86,13 +86,13 @@ export default {
           <p
             v-for="(theme, index) in themes"
             :key="index"
-            class="flex flex-col justify-center text-center theme theme--selected rounded p-2 w-18"
+            class="flex flex-col justify-center text-center theme rounded p-2 w-18"
           >
             <span
               class="w-5 rounded-full px-4 py-4 mb-3"
               :class="'bg-' + theme.backgroundColor"
             ></span>
-            <span :class="'text-' + theme.backgroundColor">
+            <span>
               {{ theme.name }}
             </span>
           </p>
