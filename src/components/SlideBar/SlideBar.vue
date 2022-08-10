@@ -57,7 +57,7 @@ export default {
     <div class="justify-between flex border-b">
       <div class="flex items-center py-3">
         <div class="grow ml-3">
-          <p class="text-sm font-semibold text-gray-800">Settings</p>
+          <p class="text-lg font-semibold text-gray-800">Settings</p>
         </div>
       </div>
       <button class="items-center p-4 text-red" @click="onClose">
@@ -72,6 +72,9 @@ export default {
             class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
             type="checkbox"
             role="switch"
+            :style="{
+              '--color-active': themeSelected.colorRGB,
+            }"
             :checked="showProgress"
             @change="handleShowProgress"
           />

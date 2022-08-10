@@ -189,7 +189,7 @@ export default defineComponent({
             'todo-status--active': status.value == filterActive,
           }"
           :style="{
-            '--color-active': themeSelected.name.toLocaleLowerCase(),
+            '--color-active': themeSelected.colorRGB,
           }"
           :onclick="() => onChangeFilter(status.value)"
         >
