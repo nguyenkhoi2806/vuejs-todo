@@ -5,7 +5,7 @@ import type { Theme } from "@/models/theme";
 
 type ThemeType = {
   showProgress: boolean;
-  theme: Theme;
+  themeSelected: Theme;
 };
 
 export const useSettingStore = defineStore({
@@ -13,11 +13,14 @@ export const useSettingStore = defineStore({
   state: () =>
     ({
       showProgress: false,
-      theme: THEME_DEFAULT,
+      themeSelected: THEME_DEFAULT,
     } as ThemeType),
   actions: {
     updateShowProgress() {
       this.showProgress = !this.showProgress;
+    },
+    updateThemeSelected(theme: Theme) {
+      this.themeSelected = theme;
     },
   },
 });

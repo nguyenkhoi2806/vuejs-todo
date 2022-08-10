@@ -14,7 +14,7 @@ export const THEME_DATA = [
     name: "Red",
   },
   {
-    backgroundColor: "gray-300",
+    backgroundColor: "gray-500",
     textColor: "black",
     name: "Gray",
   },

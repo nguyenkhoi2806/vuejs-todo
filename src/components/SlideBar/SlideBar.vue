@@ -24,18 +24,23 @@ export default {
   },
   setup() {
     const store = useSettingStore();
-    const { showProgress } = storeToRefs(store);
+    const { showProgress, themeSelected } = storeToRefs(store);
 
     return {
       store,
       showProgress,
       themes: THEME_DATA,
+      themeSelected,
     };
   },
   methods: {
     handleShowProgress() {
       const { store } = this;
       store.updateShowProgress();
+    },
+    selectTheme(theme) {
+      const { store } = this;
+      store.updateThemeSelected(theme);
     },
   },
 };
@@ -87,6 +92,10 @@ export default {
             v-for="(theme, index) in themes"
             :key="index"
             class="flex flex-col justify-center text-center theme rounded p-2 w-18"
+            :class="{
+              theme__selected: themeSelected.name === theme.name,
+            }"
+            @click="selectTheme(theme)"
           >
             <span
               class="w-5 rounded-full px-4 py-4 mb-3"

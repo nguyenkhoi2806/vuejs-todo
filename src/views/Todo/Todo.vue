@@ -28,7 +28,7 @@ export default defineComponent({
     const todoStore = useTodoStore();
     const settingStore = useSettingStore();
     const { loading, todoList } = storeToRefs(todoStore);
-    const { showProgress } = storeToRefs(settingStore);
+    const { showProgress, themeSelected } = storeToRefs(settingStore);
     todoStore.loadTodo();
 
     todoStore.$subscribe((mutation, state) => {
@@ -49,6 +49,7 @@ export default defineComponent({
       loading,
       todoList,
       showProgress,
+      themeSelected,
     };
   },
   data() {
@@ -138,9 +139,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-if="showProgress" class="w-full bg-blue-200 rounded-full mt-4">
+  <div
+    v-if="showProgress"
+    class="w-full rounded-full mt-4"
+    :class="'bg-' + themeSelected.name.toLowerCase() + '-200'"
+  >
     <div
-      class="bg-blue-500 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+      class="text-xs font-medium text-center p-0.5 leading-none rounded-full"
+      :class="[
+        'bg-' + themeSelected.name.toLowerCase() + '-500',
+        'text-' + themeSelected.textColor,
+      ]"
       :style="'width:' + percentTodoComplete + '%'"
     >
       {{ percentTodoComplete }}%
@@ -158,7 +167,12 @@ export default defineComponent({
         @keyup.enter="submit"
       />
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-2 rounded w-1/12"
+        class="font-bold px-2 py-2 rounded w-1/12"
+        :class="[
+          'bg-' + themeSelected.backgroundColor,
+          'text-' + themeSelected.textColor,
+          'hover:bg' + themeSelected.textColor + '-700',
+        ]"
         @click="submit"
       >
         Add
@@ -181,7 +195,12 @@ export default defineComponent({
       </div>
       <button
         v-if="todoList.length > 0"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-2 rounded"
+        class="font-bold px-2 py-2 rounded"
+        :class="[
+          'bg-' + themeSelected.backgroundColor,
+          'text-' + themeSelected.textColor,
+          'hover:bg' + themeSelected.textColor + '-700',
+        ]"
         @click="showConfirmDeleteAll"
       >
         Delete all

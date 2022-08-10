@@ -1,5 +1,4 @@
 <script>
-import "./assets/scss/global.scss";
 import "tw-elements";
 
 import Layout from "./layout/default.vue";
