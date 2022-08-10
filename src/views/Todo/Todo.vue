@@ -188,6 +188,9 @@ export default defineComponent({
           :class="{
             'todo-status--active': status.value == filterActive,
           }"
+          :style="{
+            '--color-active': themeSelected.name.toLocaleLowerCase(),
+          }"
           :onclick="() => onChangeFilter(status.value)"
         >
           {{ status.label }}

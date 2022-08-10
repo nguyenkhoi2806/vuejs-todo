@@ -16,8 +16,8 @@
 
   &-status {
     &--active {
-      border-bottom: 1px solid $primary-color;
-      color: $primary-color;
+      border-bottom: 1px solid var(--color-active);
+      color: var(--color-active);
     }
   }
 
