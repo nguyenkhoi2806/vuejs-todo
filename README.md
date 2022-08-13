@@ -20,17 +20,10 @@ yarn run dev
 yarn run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Technical use
 
-```sh
-yarn run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn run lint
-```
-
+- VueJs 3
+- Sass
+- Tailwind
 
 ### link demo https://nguyenkhoi2806.github.io/vuejs-todo/
