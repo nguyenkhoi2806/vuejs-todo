@@ -1,6 +1,6 @@
 <script>
 import { storeToRefs } from "pinia";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import {
   ALL,
@@ -83,6 +83,12 @@ export default defineComponent({
       return 0;
     },
   },
+  watch: {
+    filteredTodoByStatus: {
+      deep: true,
+      handler() {},
+    },
+  },
   methods: {
     submit() {
       const newTodo = new Todo({
@@ -104,7 +110,7 @@ export default defineComponent({
       todo.status = !todo.status;
       this.todoStore.updateTodoList(todo);
     },
-    updateName(todo, name) { 
+    updateName(todo, name) {
       todo.name = name;
       this.todoStore.updateTodoList(todo);
     },
