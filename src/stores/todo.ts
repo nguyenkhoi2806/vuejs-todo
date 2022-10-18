@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
-import { TODO_LIST } from "@/constants/todo";
-import Todo from "@/models/todo";
+import { TODO_LIST } from "../constants/todo";
+import Todo from "../models/Todo";
 
 type TodoType = {
   todoList: Todo[];

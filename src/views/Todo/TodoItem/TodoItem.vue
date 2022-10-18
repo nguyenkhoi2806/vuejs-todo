@@ -1,12 +1,16 @@
 <script>
-import "./todo-item.scss";
-
 import moment from "moment";
+import { watch } from "vue";
 
-import Todo from "@/models/todo";
+import Todo from "@/models/Todo";
+
+import InputTextCustom from "../../../components/Input/Text.vue";
 
 export default {
   name: "TodoItem",
+  components: {
+    InputTextCustom,
+  },
   props: {
     todo: Todo,
     deleteTodo: {
@@ -28,11 +32,19 @@ export default {
       },
     },
   },
-  data() {
+  data(props) {
     return {
       isUpdateName: false,
       moment,
+      todoName: props.todo.name,
     };
+  },
+  watch: {
+    todoName: {
+      handler() {
+        this.updateName(this.todo, this.todoName)
+      },
+    }
   },
   methods: {
     shouldRenderInputName() {
@@ -54,7 +66,7 @@ export default {
           inputNameRef.focus();
         }
       });
-    },
+    }
   },
 };
 </script>
@@ -80,14 +92,12 @@ export default {
           'todo-item__label-done': todo.status,
         }"
       >
-        <input
+        <InputTextCustom
           v-if="isUpdateName"
-          ref="inputName"
+          v-model:value="todoName"
           v-click-outside="onClickOutside"
-          :value="todo.name"
-          type="text"
           class="px-2 h-10 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm"
-          @change="(event) => updateName(todo, event.target.value)"
+          @update-value:value="todoName = $event"
           @keypress="(event) => onPressEnter(event)"
         />
         <label
@@ -137,3 +147,68 @@ export default {
     </span>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import "../../../assets/scss/common/variable.scss";
+
+.todo-item {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+
+  [type="checkbox"] {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  [type="checkbox"]:checked:hover,
+  [type="checkbox"]:checked:focus,
+  [type="radio"]:checked:hover,
+  [type="radio"]:checked:focus,
+  [type="checkbox"] {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+
+  &__checked {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    background-color: #2563eb;
+  }
+
+  &__un-checked[type="checkbox"]:checked {
+    background-image: none;
+    background-color: white;
+    outline: none;
+  }
+
+  &__delete,
+  &__edit {
+    padding: 0.5rem;
+    background-color: $background-color;
+    cursor: pointer;
+
+    svg {
+      width: 1.5rem;
+    }
+  }
+
+  &__time {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: bold;
+    color: gray;
+
+    &-done {
+      .todo-item {
+        &__name {
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+</style>

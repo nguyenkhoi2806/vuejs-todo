@@ -1,6 +1,4 @@
 <script>
-import "./slide-bar.scss";
-
 import { storeToRefs } from "pinia";
 
 import { THEME_DATA } from "../../constants/theme";
@@ -113,3 +111,18 @@ export default {
     </div>
   </aside>
 </template>
+
+<style lang="scss" scoped>
+.theme {
+  &__selected {
+    border: 1px solid green;
+  }
+
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: var(--color-active);
+  border-color: var(--color-active);
+}
+</style>

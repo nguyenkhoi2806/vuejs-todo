@@ -1,6 +1,4 @@
 <script>
-import "./todo.scss";
-
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
@@ -11,9 +9,10 @@ import {
   TODO_STATUS,
   UNCOMPLETED,
 } from "@/constants/todo";
-import Todo from "@/models/todo";
+import Todo from "@/models/Todo";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.vue";
+import InputTextCustom from "../../components/Input/Text.vue";
 import { useSettingStore } from "../../stores/setting";
 import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/TodoItem.vue";
@@ -23,6 +22,7 @@ export default defineComponent({
   components: {
     TodoItem,
     ConfirmModal,
+    InputTextCustom,
   },
   setup() {
     const todoStore = useTodoStore();
@@ -104,7 +104,7 @@ export default defineComponent({
       todo.status = !todo.status;
       this.todoStore.updateTodoList(todo);
     },
-    updateName(todo, name) {
+    updateName(todo, name) { 
       todo.name = name;
       this.todoStore.updateTodoList(todo);
     },
@@ -157,14 +157,12 @@ export default defineComponent({
   </div>
   <div class="todo-page">
     <label class="flex flex-row justify-between">
-      <input
-        v-model="todoName"
-        class="px-3 placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm w-10/12"
+      <InputTextCustom
+        v-model:value="todoName"
         placeholder="Add new todo"
-        type="text"
-        name="search"
         required
-        @keyup.enter="submit"
+        @update-value:value="todoName = $event"
+        @submit="submit"
       />
       <button
         class="font-bold px-2 py-2 rounded w-1/12"
@@ -240,3 +238,36 @@ export default defineComponent({
     confirm-text="Delete"
   />
 </template>
+
+<style lang="scss" scoped>
+@import "../../assets/scss/common/variable.scss";
+.todo {
+  &-page {
+    padding-top: 1rem;
+
+    &__icon {
+      right: 0;
+      padding-right: 1rem;
+    }
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &-status {
+    &--active {
+      border-bottom: 1px solid var(--color-active);
+      color: var(--color-active);
+    }
+  }
+
+  &-list {
+    max-height: 500px;
+
+    &--scroll {
+      overflow-y: scroll;
+    }
+  }
+}
+</style>
