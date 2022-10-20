@@ -1,6 +1,6 @@
 <script>
 import { storeToRefs } from "pinia";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
 import {
   ALL,
@@ -10,6 +10,8 @@ import {
   UNCOMPLETED,
 } from "@/constants/todo";
 import Todo from "@/models/Todo";
+import LocalStorage from "@/services/localStorage";
+import Migration from "@/services/migration";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.vue";
 import InputTextCustom from "../../components/Input/Text.vue";
@@ -29,19 +31,6 @@ export default defineComponent({
     const settingStore = useSettingStore();
     const { loading, todoList } = storeToRefs(todoStore);
     const { showProgress, themeSelected } = storeToRefs(settingStore);
-    todoStore.loadTodo();
-
-    todoStore.$subscribe((mutation, state) => {
-      if (mutation.events.target) {
-        let newTodoList;
-        if (mutation.events.target.todoList) {
-          newTodoList = mutation.events.target.todoList;
-        } else {
-          newTodoList = mutation.events.target;
-        }
-        localStorage.setItem(TODO_LIST, JSON.stringify(newTodoList));
-      }
-    });
 
     return {
       todoStore,
@@ -60,6 +49,7 @@ export default defineComponent({
       idDeleted: null,
       titleConfirmModal: "",
       isDeleteAll: false,
+      percentTodoComplete: 0,
     };
   },
   computed: {
@@ -72,26 +62,44 @@ export default defineComponent({
       }
       return todoList;
     },
-
-    percentTodoComplete() {
-      const { todoList } = this;
-      const todoCompleted = todoList.filter((todo) => todo.status);
-      if (todoCompleted.length > 0) {
-        return ((todoCompleted.length / todoList.length) * 100).toFixed(1);
-      }
-
-      return 0;
-    },
   },
   watch: {
-    filteredTodoByStatus: {
+    todoList: {
       deep: true,
-      handler() {},
+      handler() {
+        this.calPercentTodoComplete();
+      },
     },
   },
+  created() {
+    const { todoStore } = this;
+    todoStore.loadTodo();
+  },
+  mounted() {
+    Migration.generateTodo(30);
+    this.calPercentTodoComplete();
+    window.addEventListener("scroll", this.handleLoadTodo);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleLoadTodo);
+  },
   methods: {
+    handleLoadTodo() {
+      if (
+        Math.max(
+          window.pageYOffset,
+          document.documentElement.scrollTop,
+          document.body.scrollTop
+        ) +
+          window.innerHeight ===
+        document.documentElement.offsetHeight
+      ) {
+        this.todoStore.updateLimitLoadTodo();
+      }
+    },
     submit() {
       const newTodo = new Todo({
+        id: LocalStorage.getIdLastTodo() + 1,
         name: this.todoName,
       });
       this.todoStore.addTodo(newTodo);
@@ -139,6 +147,14 @@ export default defineComponent({
     closeModal() {
       this.shouldShowConfirm = false;
       this.isDeleteAll = false;
+    },
+    calPercentTodoComplete() {
+      const { todoList } = this;
+      const todoCompleted = todoList.filter((todo) => todo.status);
+      this.percentTodoComplete = (
+        (todoCompleted.length / todoList.length) *
+        100
+      ).toFixed(1);
     },
   },
 });
@@ -215,18 +231,12 @@ export default defineComponent({
     </div>
   </div>
   <p v-if="loading">Loading todo list...</p>
-  <div
-    v-if="filteredTodoByStatus.length > 0"
-    class="todo-list"
-    :class="{
-      'todo-list--scroll': filteredTodoByStatus.length > 15,
-    }"
-  >
+  <div v-if="filteredTodoByStatus.length > 0" class="todo-list">
     <TodoItem
-      v-for="(todo, index) in filteredTodoByStatus"
-      :key="index"
+      v-for="todo in filteredTodoByStatus"
+      :key="todo.id"
       :todo="todo"
-      :index="index"
+      :index="todo.id"
       :delete-todo="openShowConfirmModal"
       :update-status="updateStatus"
       :update-name="updateName"
@@ -265,14 +275,6 @@ export default defineComponent({
     &--active {
       border-bottom: 1px solid var(--color-active);
       color: var(--color-active);
-    }
-  }
-
-  &-list {
-    max-height: 500px;
-
-    &--scroll {
-      overflow-y: scroll;
     }
   }
 }

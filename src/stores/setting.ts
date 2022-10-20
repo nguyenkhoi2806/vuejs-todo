@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 
-import type { Theme } from "@/models/Theme";
-
 import { THEME_DEFAULT } from "../constants/theme";
+import type { Theme } from "../models/Theme";
 
 type ThemeType = {
   showProgress: boolean;

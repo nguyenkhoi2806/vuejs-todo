@@ -1,15 +1,16 @@
 <script>
 import moment from "moment";
-import { watch } from "vue";
 
 import Todo from "@/models/Todo";
 
+import CheckBoxCustom from "../../../components/Input/CheckBox.vue";
 import InputTextCustom from "../../../components/Input/Text.vue";
 
 export default {
   name: "TodoItem",
   components: {
     InputTextCustom,
+    CheckBoxCustom,
   },
   props: {
     todo: Todo,
@@ -37,14 +38,20 @@ export default {
       isUpdateName: false,
       moment,
       todoName: props.todo.name,
+      toStatus: props.todo.status,
     };
   },
   watch: {
     todoName: {
       handler() {
-        this.updateName(this.todo, this.todoName)
+        this.updateName(this.todo, this.todoName);
       },
-    }
+    },
+    toStatus: {
+      handler() {
+        this.updateStatus(this.todo);
+      },
+    },
   },
   methods: {
     shouldRenderInputName() {
@@ -66,7 +73,7 @@ export default {
           inputNameRef.focus();
         }
       });
-    }
+    },
   },
 };
 </script>
@@ -75,15 +82,10 @@ export default {
   <div
     class="todo-item my-4 flex justify-between space-x-4 w-full text-center items-center"
   >
-    <input
+    <CheckBoxCustom
       :id="todo.id"
-      type="checkbox"
-      :class="{
-        'todo-item__checked': todo.status,
-        'todo-item__un-checked': !todo.status,
-      }"
-      :checked="todo.status"
-      @change="updateStatus(todo)"
+      v-model:value="toStatus"
+      @update-value:value="toStatus = $event"
     />
     <div class="text-left w-11/12">
       <div
@@ -155,31 +157,6 @@ export default {
   padding: 1rem;
   background-color: white;
   border-radius: 1rem;
-
-  [type="checkbox"] {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
-  [type="checkbox"]:checked:hover,
-  [type="checkbox"]:checked:focus,
-  [type="radio"]:checked:hover,
-  [type="radio"]:checked:focus,
-  [type="checkbox"] {
-    border: 1px solid #ccc;
-    box-shadow: none;
-  }
-
-  &__checked {
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-    background-color: #2563eb;
-  }
-
-  &__un-checked[type="checkbox"]:checked {
-    background-image: none;
-    background-color: white;
-    outline: none;
-  }
 
   &__delete,
   &__edit {

@@ -1,5 +1,6 @@
 import moment from "moment";
 interface ITodo {
+  id?: number;
   name: string;
   status?: boolean;
   createdDate?: string;
@@ -12,7 +13,7 @@ class Todo implements ITodo {
   createdDate: string;
 
   constructor(todo: ITodo) {
-    this.id = Math.random();
+    this.id = todo.id ? todo.id : Math.random();
     this.name = todo.name;
     this.status = todo.status ? todo.status : false;
     this.createdDate = todo.createdDate

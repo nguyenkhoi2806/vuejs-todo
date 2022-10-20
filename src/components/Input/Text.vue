@@ -31,7 +31,7 @@ export default {
     :placeholder="placeholder"
     type="text"
     class="px-3 placeholder:text-slate-400 block w-full border border-slate-300 rounded-md shadow-sm w-10/12"
-    @input="$emit('update-value:value', $event.target.value)" 
+    @input="$emit('update-value:value', $event.target.value)"
     @keyup.enter="$emit('submit', $event.target.value)"
   />
 </template>
