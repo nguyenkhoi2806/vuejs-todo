@@ -2,12 +2,7 @@
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
-import {
-  ALL,
-  COMPLETED, 
-  TODO_STATUS,
-  UNCOMPLETED,
-} from "@/constants/todo";
+import { ALL, COMPLETED, TODO_STATUS, UNCOMPLETED } from "@/constants/todo";
 import Todo from "@/models/Todo";
 import LocalStorage from "@/services/localStorage";
 import Migration from "@/services/migration";
@@ -75,7 +70,7 @@ export default defineComponent({
     todoStore.loadTodo();
   },
   mounted() {
-    Migration.generateTodo(30);
+    Migration.generateTodo(100);
     this.calPercentTodoComplete();
     window.addEventListener("scroll", this.handleLoadTodo);
   },
