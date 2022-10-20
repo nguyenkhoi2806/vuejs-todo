@@ -4,8 +4,7 @@ import { defineComponent } from "vue";
 
 import {
   ALL,
-  COMPLETED,
-  TODO_LIST,
+  COMPLETED, 
   TODO_STATUS,
   UNCOMPLETED,
 } from "@/constants/todo";
