@@ -1,13 +1,6 @@
 <script>
-import HeaderApp from "../components/Header/Header.vue";
-import SlideBar from "../components/SlideBar/SlideBar.vue";
-
 export default {
   name: "Layout",
-  components: {
-    HeaderApp,
-    SlideBar,
-  },
   data() {
     return {
       open: false,
@@ -22,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <SlideBar :on-close="handleSlideBar" :open="open" />
-  <HeaderApp :open-slide="handleSlideBar" />
-  <slot />
+  <slot name="slide-bar" :on-close="handleSlideBar" :open="open"></slot>
+  <slot name="header" :open-slide="handleSlideBar"></slot>
+  <slot name="body"></slot>
 </template>
