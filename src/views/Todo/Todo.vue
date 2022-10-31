@@ -28,6 +28,10 @@ export default defineComponent({
     const { loading, todoList, limitLoadTodo } = storeToRefs(todoStore);
     const { showProgress, themeSelected } = storeToRefs(settingStore);
 
+    setTimeout(() => {
+      todoStore.updateLimitLoadTodo();
+    }, 2000);
+
     return {
       todoStore,
       TODO_STATUS,
@@ -68,10 +72,6 @@ export default defineComponent({
         this.calPercentTodoComplete();
       },
     },
-  },
-  created() {
-    const { todoStore } = this;
-    todoStore.loadTodo();
   },
   mounted() {
     Migration.generateTodo(100);

@@ -1,6 +1,12 @@
 <script>
+import { ref } from "vue-demi";
+
+import Loading from "@/components/Loading/Loading.vue";
 export default {
   name: "Layout",
+  components: {
+    Loading,
+  },
   data() {
     return {
       open: false,
@@ -17,5 +23,12 @@ export default {
 <template>
   <slot name="slide-bar" :on-close="handleSlideBar" :open="open"></slot>
   <slot name="header" :open-slide="handleSlideBar"></slot>
-  <slot name="body"></slot>
+  <Suspense>
+    <template #default>
+      <slot name="body"></slot>
+    </template>
+    <template #fallback>
+      <Loading />
+    </template>
+  </Suspense>
 </template>
