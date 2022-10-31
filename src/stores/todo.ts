@@ -55,8 +55,11 @@ export const useTodoStore = defineStore({
     },
 
     updateLimitLoadTodo() {
-      this.limitLoadTodo = Number(this.limitLoadTodo) + 8;
-      this.loadTodo();
+      return new Promise((resolve) => {
+        this.limitLoadTodo = Number(this.limitLoadTodo) + 8;
+        this.loadTodo();
+        resolve(this.limitLoadTodo);
+      });
     },
   },
 });

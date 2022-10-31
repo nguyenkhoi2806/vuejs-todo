@@ -2,15 +2,16 @@
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
+import ConfirmModal from "@/components/ConfirmModal/ConfirmModal.vue";
+import InputTextCustom from "@/components/Input/Text.vue";
+import Loading from "@/components/Loading/Loading.vue";
 import { ALL, COMPLETED, TODO_STATUS, UNCOMPLETED } from "@/constants/todo";
 import Todo from "@/models/Todo";
 import LocalStorage from "@/services/localStorage";
 import Migration from "@/services/migration";
+import { useSettingStore } from "@/stores/setting";
+import { useTodoStore } from "@/stores/todo";
 
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.vue";
-import InputTextCustom from "../../components/Input/Text.vue";
-import { useSettingStore } from "../../stores/setting";
-import { useTodoStore } from "../../stores/todo";
 import TodoItem from "./TodoItem/TodoItem.vue";
 
 export default defineComponent({
@@ -19,11 +20,12 @@ export default defineComponent({
     TodoItem,
     ConfirmModal,
     InputTextCustom,
+    Loading,
   },
   setup() {
     const todoStore = useTodoStore();
     const settingStore = useSettingStore();
-    const { loading, todoList } = storeToRefs(todoStore);
+    const { loading, todoList, limitLoadTodo } = storeToRefs(todoStore);
     const { showProgress, themeSelected } = storeToRefs(settingStore);
 
     return {
@@ -33,6 +35,7 @@ export default defineComponent({
       todoList,
       showProgress,
       themeSelected,
+      limitLoadTodo,
     };
   },
   data() {
@@ -44,6 +47,7 @@ export default defineComponent({
       titleConfirmModal: "",
       isDeleteAll: false,
       percentTodoComplete: 0,
+      isLoading: false,
     };
   },
   computed: {
@@ -79,6 +83,7 @@ export default defineComponent({
   },
   methods: {
     handleLoadTodo() {
+      const { limitLoadTodo, todoList, isLoading } = this;
       if (
         Math.max(
           window.pageYOffset,
@@ -86,9 +91,16 @@ export default defineComponent({
           document.body.scrollTop
         ) +
           window.innerHeight ===
-        document.documentElement.offsetHeight
+          document.documentElement.offsetHeight &&
+        limitLoadTodo <= todoList.length &&
+        !isLoading
       ) {
-        this.todoStore.updateLimitLoadTodo();
+        this.isLoading = true;
+        setTimeout(() => {
+          this.todoStore.updateLimitLoadTodo().then(() => {
+            this.isLoading = false;
+          });
+        }, 2000);
       }
     },
     submit() {
@@ -247,6 +259,7 @@ export default defineComponent({
     width="sm"
     confirm-text="Delete"
   />
+  <Loading v-if="isLoading" />
 </template>
 
 <style lang="scss" scoped>
