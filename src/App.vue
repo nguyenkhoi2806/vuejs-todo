@@ -1,15 +1,20 @@
 <script>
 import "tw-elements";
 
+import { defineAsyncComponent } from "vue";
+
 import HeaderApp from "@/components/Header/Header.vue";
 import SlideBar from "@/components/SlideBar/SlideBar.vue";
 
 import Layout from "./layout/default.vue";
-import Todo from "./views/Todo/Todo.vue";
 
 export default {
   components: {
-    Todo,
+    Todo: defineAsyncComponent({
+      loader: () => import("@/views/Todo/Todo.vue"),
+      delay: 10000,
+      timeout: 10000,
+    }),
     Layout,
     SlideBar,
     HeaderApp,

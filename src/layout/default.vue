@@ -1,6 +1,4 @@
 <script>
-import { ref } from "vue-demi";
-
 import Loading from "@/components/Loading/Loading.vue";
 export default {
   name: "Layout",

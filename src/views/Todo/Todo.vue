@@ -22,15 +22,14 @@ export default defineComponent({
     InputTextCustom,
     Loading,
   },
-  setup() {
+  async setup() {
     const todoStore = useTodoStore();
     const settingStore = useSettingStore();
     const { loading, todoList, limitLoadTodo } = storeToRefs(todoStore);
     const { showProgress, themeSelected } = storeToRefs(settingStore);
 
-    setTimeout(() => {
-      todoStore.updateLimitLoadTodo();
-    }, 2000);
+    todoStore.loadTodo();
+    Migration.generateTodo(100);
 
     return {
       todoStore,
@@ -73,18 +72,19 @@ export default defineComponent({
       },
     },
   },
-  mounted() {
-    Migration.generateTodo(100);
+  created() {
     this.calPercentTodoComplete();
+  },
+  mounted() {
     window.addEventListener("scroll", this.handleLoadTodo);
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleLoadTodo);
   },
   methods: {
-    handleLoadTodo() {
-      const { limitLoadTodo, todoList, isLoading } = this;
-      if (
+    shouldLoadMoreTodo() {
+      const { isLoading, limitLoadTodo, todoList } = this;
+      return (
         Math.max(
           window.pageYOffset,
           document.documentElement.scrollTop,
@@ -94,7 +94,10 @@ export default defineComponent({
           document.documentElement.offsetHeight &&
         limitLoadTodo <= todoList.length &&
         !isLoading
-      ) {
+      );
+    },
+    handleLoadTodo() {
+      if (this.shouldLoadMoreTodo()) {
         this.isLoading = true;
         setTimeout(() => {
           this.todoStore.updateLimitLoadTodo().then(() => {
