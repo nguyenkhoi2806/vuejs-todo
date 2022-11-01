@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
+import Button from "@/components/Button/Button.vue";
 import ConfirmModal from "@/components/ConfirmModal/ConfirmModal.vue";
 import InputTextCustom from "@/components/Input/Text.vue";
 import Loading from "@/components/Loading/Loading.vue";
@@ -21,6 +22,7 @@ export default defineComponent({
     ConfirmModal,
     InputTextCustom,
     Loading,
+    Button,
   },
   async setup() {
     const todoStore = useTodoStore();
@@ -195,17 +197,7 @@ export default defineComponent({
         @update-value:value="todoName = $event"
         @submit="submit"
       />
-      <button
-        class="font-bold px-2 py-2 rounded w-1/12"
-        :class="[
-          'bg-' + themeSelected.backgroundColor,
-          'text-' + themeSelected.textColor,
-          'hover:bg' + themeSelected.textColor + '-700',
-        ]"
-        @click="submit"
-      >
-        Add
-      </button>
+      <Button :click="submit" label="Add" />
     </label>
     <div class="flex space-x-2 justify-between my-3">
       <div class="flex">
@@ -225,18 +217,11 @@ export default defineComponent({
           {{ status.label }}
         </button>
       </div>
-      <button
-        v-if="todoList.length > 0"
-        class="font-bold px-2 py-2 rounded"
-        :class="[
-          'bg-' + themeSelected.backgroundColor,
-          'text-' + themeSelected.textColor,
-          'hover:bg' + themeSelected.textColor + '-700',
-        ]"
-        @click="showConfirmDeleteAll"
-      >
-        Delete all
-      </button>
+      <Button
+        v-if="filteredTodoByStatus.length > 0"
+        :click="showConfirmDeleteAll"
+        label="Delete all"
+      />
     </div>
   </div>
   <p v-if="loading">Loading todo list...</p>

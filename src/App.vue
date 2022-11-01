@@ -10,11 +10,14 @@ import Layout from "./layout/default.vue";
 
 export default {
   components: {
-    Todo: defineAsyncComponent({
-      loader: () => import("@/views/Todo/Todo.vue"),
-      delay: 10000,
-      timeout: 10000,
-    }),
+    Dashboard: defineAsyncComponent(
+      () =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(import("@/views/Dashboard/Dashboard.vue"));
+          }, 2000);
+        })
+    ),
     Layout,
     SlideBar,
     HeaderApp,
@@ -32,7 +35,7 @@ export default {
     </template>
     <template #body>
       <div class="container mx-auto">
-        <Todo />
+        <Dashboard />
       </div>
     </template>
   </Layout>
