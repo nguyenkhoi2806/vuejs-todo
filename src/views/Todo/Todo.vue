@@ -94,7 +94,7 @@ export default defineComponent({
         ) +
           window.innerHeight ===
           document.documentElement.offsetHeight &&
-        limitLoadTodo <= todoList.length &&
+        limitLoadTodo <= localStorage.loadTodo().length &&
         !isLoading
       );
     },

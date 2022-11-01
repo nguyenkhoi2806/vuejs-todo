@@ -119,6 +119,11 @@
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.11.tgz"
   "version" "7.0.11"
 
+"@types/lodash@^4.14.187":
+  "integrity" "sha512-MrO/xLXCaUgZy3y96C/iOsaIqZSeupyTImKClHunL5GrmaiII2VwvWmLBu2hwa0Kp0sV19CsyjtrTc/Fx8rg/A=="
+  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.187.tgz"
+  "version" "4.14.187"
+
 "@types/node@*":
   "integrity" "sha512-V3orv+ggDsWVHP99K3JlwtH20R7J4IhI1Kksgc+64q5VxgfRkQG8Ws3MFm/FZOKDYGy9feGFlZ70/HpCNe9QaA=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-17.0.36.tgz"
