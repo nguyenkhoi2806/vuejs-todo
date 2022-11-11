@@ -85,7 +85,7 @@ export default defineComponent({
   },
   methods: {
     shouldLoadMoreTodo() {
-      const { isLoading, limitLoadTodo, todoList } = this;
+      const { isLoading, limitLoadTodo } = this;
       return (
         Math.max(
           window.pageYOffset,
@@ -94,7 +94,7 @@ export default defineComponent({
         ) +
           window.innerHeight ===
           document.documentElement.offsetHeight &&
-        limitLoadTodo <= localStorage.loadTodo().length &&
+        limitLoadTodo <= LocalStorage.loadTodo().length &&
         !isLoading
       );
     },
@@ -235,6 +235,7 @@ export default defineComponent({
       :update-status="updateStatus"
       :update-name="updateName"
     />
+    <Loading v-if="isLoading" />
   </div>
   <div v-if="filteredTodoByStatus.length === 0">
     <i> Empty todo list </i>
@@ -247,7 +248,6 @@ export default defineComponent({
     width="sm"
     confirm-text="Delete"
   />
-  <Loading v-if="isLoading" />
 </template>
 
 <style lang="scss" scoped>
