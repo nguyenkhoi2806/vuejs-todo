@@ -2,8 +2,8 @@
 import "tw-elements";
 
 import HeaderApp from "@/components/Header/Header.vue";
+import Routing from "@/components/Routing/Routing.vue";
 import SlideBar from "@/components/SlideBar/SlideBar.vue";
-import Routing from "@/Routing/Routing.vue";
 
 import Layout from "./layout/default.vue";
 
