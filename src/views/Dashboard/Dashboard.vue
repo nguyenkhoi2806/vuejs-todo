@@ -4,8 +4,8 @@ import { defineComponent } from "vue";
 
 import useSettingStore from "@/stores/setting";
 
-import Count from "../Count/Count.vue";
-import Todo from "../Todo/Todo.vue";
+import Count from "./Count/Count.vue";
+import Todo from "./Todo/Todo.vue";
 
 export default defineComponent({
   name: "Dashboard",

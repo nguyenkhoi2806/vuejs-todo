@@ -1,10 +1,9 @@
 <script>
 import moment from "moment";
 
+import CheckBoxCustom from "@/components/Input/CheckBox.vue";
+import InputTextCustom from "@/components/Input/Text.vue";
 import Todo from "@/models/Todo";
-
-import CheckBoxCustom from "../../../components/Input/CheckBox.vue";
-import InputTextCustom from "../../../components/Input/Text.vue";
 
 export default {
   name: "TodoItem",
@@ -151,7 +150,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "../../../assets/scss/common/variable.scss";
+@import "@/assets/scss/common/variable.scss";
 
 .todo-item {
   padding: 1rem;

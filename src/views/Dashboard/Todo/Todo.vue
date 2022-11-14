@@ -251,7 +251,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/common/variable.scss";
+@import "@/assets/scss/common/variable.scss";
 .todo {
   &-page {
     padding-top: 1rem;

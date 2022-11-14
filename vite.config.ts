@@ -6,7 +6,6 @@ import eslintPlugin from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), eslintPlugin()],
-  base: "/vuejs-todo/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -14,9 +13,9 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      output: { 
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
+      output: {
+        chunkFileNames: "assets/js/[name]-[hash].js",
+        entryFileNames: "assets/js/[name]-[hash].js",
       },
     },
   },
