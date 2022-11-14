@@ -23,9 +23,8 @@ export const useTodoStore = defineStore({
       if (!todo || !todo.name) {
         return;
       }
-      this.todoList.push(todo);
+      this.todoList.unshift(todo);
       LocalStorage.pushNewTodo(todo);
-      this.loadTodo();
     },
     removeTodo(todoId: number) {
       this.todoList = this.todoList.filter((todo: Todo) => todo.id !== todoId);
