@@ -16,7 +16,7 @@ export default defineComponent({
     label: {
       type: String,
       default() {
-        return "button";
+        return "";
       },
     },
   },
@@ -41,5 +41,6 @@ export default defineComponent({
     @click="click"
   >
     {{ label }}
+    <slot></slot>
   </button>
 </template>

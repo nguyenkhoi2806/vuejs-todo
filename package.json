@@ -19,6 +19,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "gh-pages": "^4.0.0",
+    "mitt": "^3.0.0",
     "moment": "^2.29.3",
     "pinia": "^2.0.13",
     "tw-elements": "^1.0.0-alpha12",

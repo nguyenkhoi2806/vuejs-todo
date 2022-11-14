@@ -79,6 +79,10 @@ export default defineComponent({
   },
   mounted() {
     window.addEventListener("scroll", this.handleLoadTodo);
+    const { todoList } = this;
+    this.eventBus.emit("todoListTotal", {
+      todoListTotal: todoList.length,
+    });
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleLoadTodo);
@@ -102,8 +106,11 @@ export default defineComponent({
       if (this.shouldLoadMoreTodo()) {
         this.isLoading = true;
         setTimeout(() => {
-          this.todoStore.updateLimitLoadTodo().then(() => {
+          this.todoStore.updateLimitLoadTodo().then((todoList) => {
             this.isLoading = false;
+            this.eventBus.emit("todoListTotal", {
+              todoListTotal: todoList.length,
+            });
           });
         }, 2000);
       }

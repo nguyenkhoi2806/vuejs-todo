@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import { defineComponent } from "vue";
 
+import Button from "@/components/Button/Button.vue";
 import useSettingStore from "@/stores/setting";
 
 import Count from "./Count/Count.vue";
@@ -12,6 +13,7 @@ export default defineComponent({
   components: {
     Todo,
     Count,
+    Button,
   },
   setup() {
     const settingStore = useSettingStore();
@@ -23,6 +25,7 @@ export default defineComponent({
   data() {
     return {
       currentTab: "Todo",
+      todoLoaded: 0,
     };
   },
   computed: {
@@ -38,6 +41,11 @@ export default defineComponent({
       }
       return "";
     },
+  },
+  mounted() {
+    this.eventBus.on("todoListTotal", ({ todoListTotal }) => {
+      this.todoLoaded = todoListTotal;
+    });
   },
   methods: {
     switchTo(tab) {
@@ -72,6 +80,10 @@ export default defineComponent({
     <KeepAlive>
       <component :is="currentTab"></component>
     </KeepAlive>
+    <Button class="total-todo">
+      Total <br />
+      {{ todoLoaded }}
+    </Button>
   </div>
 </template>
 
@@ -92,5 +104,13 @@ export default defineComponent({
 
 .dashboard-pages {
   padding-top: 2rem;
+}
+
+.total-todo {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 70px;
+  height: 70px;
 }
 </style>
