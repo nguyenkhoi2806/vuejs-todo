@@ -1,6 +1,7 @@
 <script>
 import { storeToRefs } from "pinia";
 
+import { ROUTE_ABOUT_US, ROUTE_DASHBOARD } from "@/constants/route";
 import useSettingStore from "@/stores/setting";
 
 export default {
@@ -19,6 +20,27 @@ export default {
     return {
       themeSelected,
     };
+  },
+
+  data() {
+    return {
+      route: window.location.pathname,
+    };
+  },
+
+  computed: {
+    isDashboardActive() {
+      if (this.route === ROUTE_DASHBOARD) {
+        return "active";
+      }
+      return "";
+    },
+    isAboutUsActive() {
+      if (this.route === ROUTE_ABOUT_US) {
+        return "active";
+      }
+      return "";
+    },
   },
 };
 </script>
@@ -57,7 +79,12 @@ export default {
           <div class="collapse navbar-collapse flex-grow items-center">
             <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
               <li class="nav-item px-2">
-                <a class="nav-link active" aria-current="page" href="/">
+                <a
+                  class="nav-link"
+                  :class="isDashboardActive"
+                  aria-current="page"
+                  href="/"
+                >
                   Dashboard
                 </a>
               </li>
@@ -65,6 +92,7 @@ export default {
                 <a
                   class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
                   href="about"
+                  :class="isAboutUsActive"
                 >
                   About
                 </a>

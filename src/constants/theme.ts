@@ -1,4 +1,4 @@
-import type { Theme } from "../models/Theme";
+import type { Theme } from "@/models/Theme";
 
 export const THEME_DEFAULT = <Theme>{
   backgroundColor: "red-500",

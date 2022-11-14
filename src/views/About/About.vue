@@ -1,9 +1,9 @@
 <template>
   <div class="intro">
-    Hế lô hế lô, <span class="ongdev-text">Ông dev đêi!</span>
+    Hế lô hế lô, <span class="ongdev-text">Dev củi đêi!</span>
   </div>
   <div class="tagline">
-    Ghét code | Nghiện bia | Đừng như <span class="ongdev-text">Ông dev</span>
+    Ghét code | Nghiện gym | Đừng như <span class="ongdev-text">Dev củi</span>
   </div>
 </template>
 

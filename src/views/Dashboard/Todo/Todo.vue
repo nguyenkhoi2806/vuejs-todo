@@ -71,6 +71,7 @@ export default defineComponent({
       deep: true,
       handler() {
         this.calPercentTodoComplete();
+        this.emitTotalTodo();
       },
     },
   },
@@ -79,10 +80,7 @@ export default defineComponent({
   },
   mounted() {
     window.addEventListener("scroll", this.handleLoadTodo);
-    const { todoList } = this;
-    this.eventBus.emit("todoListTotal", {
-      todoListTotal: todoList.length,
-    });
+    this.emitTotalTodo();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleLoadTodo);
@@ -104,18 +102,17 @@ export default defineComponent({
     },
     handleLoadTodo() {
       if (this.shouldLoadMoreTodo()) {
-        this.isLoading = true;
+        if (this.filterActive !== COMPLETED) {
+          this.isLoading = true;
+        }
         setTimeout(() => {
-          this.todoStore.updateLimitLoadTodo().then((todoList) => {
+          this.todoStore.updateLimitLoadTodo().then(() => {
             this.isLoading = false;
-            this.eventBus.emit("todoListTotal", {
-              todoListTotal: todoList.length,
-            });
           });
         }, 2000);
       }
     },
-    submit() {
+    async submit() {
       const newTodo = new Todo({
         id: LocalStorage.getIdLastTodo() + 1,
         name: this.todoName,
@@ -173,6 +170,12 @@ export default defineComponent({
         (todoCompleted.length / todoList.length) *
         100
       ).toFixed(1);
+    },
+    emitTotalTodo() {
+      const { todoList } = this;
+      this.eventBus.emit("todoListTotal", {
+        todoListTotal: todoList.length,
+      });
     },
   },
 });
