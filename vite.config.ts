@@ -8,7 +8,7 @@ const ASSET_URL = process.env.ASSET_URL || "";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), eslintPlugin()],
-  base: `${ASSET_URL}`,
+  base: ASSET_URL,
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
