@@ -18,7 +18,7 @@ export default {
               }, 1000);
             })
         ),
-        [ROUTE_ABOUT_US]: About,
+        [ROUTE_ABOUT_US]: defineAsyncComponent(About),
       },
     };
   },
