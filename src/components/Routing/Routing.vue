@@ -18,7 +18,12 @@ export default {
               }, 1000);
             })
         ),
-        [ROUTE_ABOUT_US]: defineAsyncComponent(About),
+        [ROUTE_ABOUT_US]: defineAsyncComponent( () =>
+            new Promise((resolve, _) => {
+              setTimeout(() => {
+                resolve(import("@/views/About/About.vue"));
+              }, 1000);
+            })),
       },
     };
   },
