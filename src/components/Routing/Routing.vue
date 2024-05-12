@@ -1,8 +1,12 @@
 <script>
 import { defineAsyncComponent } from "vue";
 
-import { ROUTE_ABOUT_US, ROUTE_DASHBOARD } from "@/constants/route";
-import About from "@/views/About/About.vue";
+import {
+  ROUTE_ABOUT_US,
+  ROUTE_DASHBOARD,
+  ROUTE_SHOPPING_CART,
+} from "@/constants/route";
+import About from "@/views/About/About.vue"
 import NotFound from "@/views/NotFound/NotFound.vue";
 
 export default {
@@ -16,14 +20,17 @@ export default {
               setTimeout(() => {
                 resolve(import("@/views/Dashboard/Dashboard.vue"));
               }, 1000);
-            })
+            }),
         ),
-        [ROUTE_ABOUT_US]: defineAsyncComponent( () =>
+        [ROUTE_ABOUT_US]: About,
+        [ROUTE_SHOPPING_CART]: defineAsyncComponent(
+          () =>
             new Promise((resolve, _) => {
               setTimeout(() => {
-                resolve(import("@/views/About/About.vue"));
-              }, 1000);
-            })),
+                resolve(import("@/views/Shopping/Shopping.vue"));
+              });
+            }),
+        ),
       },
     };
   },

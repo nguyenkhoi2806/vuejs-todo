@@ -1,7 +1,11 @@
 <script>
 import { storeToRefs } from "pinia";
 
-import { ROUTE_ABOUT_US, ROUTE_DASHBOARD } from "@/constants/route";
+import {
+  ROUTE_ABOUT_US,
+  ROUTE_DASHBOARD,
+  ROUTE_SHOPPING_CART,
+} from "@/constants/route";
 import useSettingStore from "@/stores/setting";
 
 export default {
@@ -25,22 +29,10 @@ export default {
   data() {
     return {
       route: window.location.pathname,
+      ROUTE_ABOUT_US,
+      ROUTE_DASHBOARD,
+      ROUTE_SHOPPING_CART,
     };
-  },
-
-  computed: {
-    isDashboardActive() {
-      if (this.route === ROUTE_DASHBOARD) {
-        return "active";
-      }
-      return "";
-    },
-    isAboutUsActive() {
-      if (this.route === ROUTE_ABOUT_US) {
-        return "active";
-      }
-      return "";
-    },
   },
 };
 </script>
@@ -77,13 +69,13 @@ export default {
           class="container-fluid w-full flex flex-wrap items-center justify-between px-6"
         >
           <div class="collapse navbar-collapse flex-grow items-center">
-            <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
+            <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto text-black">
               <li class="nav-item px-2">
                 <a
                   class="nav-link"
-                  :class="isDashboardActive"
+                  :class="route === ROUTE_DASHBOARD ? 'font-bold' : ''"
                   aria-current="page"
-                  href="/"
+                  :href="ROUTE_DASHBOARD"
                 >
                   Dashboard
                 </a>
@@ -91,8 +83,17 @@ export default {
               <li class="nav-item pr-2">
                 <a
                   class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
-                  href="about"
-                  :class="isAboutUsActive"
+                  :href="ROUTE_SHOPPING_CART"
+                  :class="route === ROUTE_SHOPPING_CART ? 'font-bold' : ''"
+                >
+                  Shopping
+                </a>
+              </li>
+              <li class="nav-item pr-2">
+                <a
+                  class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
+                  :href="ROUTE_ABOUT_US"
+                  :class="route === ROUTE_ABOUT_US ? 'font-bold' : ''"
                 >
                   About
                 </a>

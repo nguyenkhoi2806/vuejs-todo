@@ -1,0 +1,1 @@
+<template>Shopping cart</template>
