@@ -3,7 +3,7 @@ import moment from "moment";
 
 import CheckBoxCustom from "@/components/Input/CheckBox.vue";
 import InputTextCustom from "@/components/Input/Text.vue";
-import Todo from "@/models/Todo";
+import Todo from "@/models/todo";
 
 export default {
   name: "TodoItem",

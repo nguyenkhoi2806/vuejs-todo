@@ -1,7 +1,7 @@
 import { TODO_LIST } from "@/constants/todo";
-import Todo from "@/models/Todo";
+import Todo from "@/models/todo";
 
-import LocalStorage from "./localStorage";
+import LocalStorage from "./local-storage";
 
 const Migration = {
   generateTodo(todoNumber: number) {
@@ -12,7 +12,7 @@ const Migration = {
           new Todo({
             id: i,
             name: "Item " + i,
-          })
+          }),
         );
       }
       localStorage.setItem(TODO_LIST, JSON.stringify(newTodoList));
