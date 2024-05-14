@@ -24,7 +24,7 @@ export default {
       <div>
         <h3 class="text-sm text-gray-700">
           <a :href="product.href">
-            <span aria-hidden="true" class="inset-0  font-bold ">
+            <span aria-hidden="true" class="inset-0 font-bold">
               {{ product.title }}
             </span>
           </a>

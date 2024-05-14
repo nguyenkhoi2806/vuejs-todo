@@ -21,7 +21,7 @@ export default {
       return fetch("https://fakestoreapi.com/products/?limit=9")
         .then(async (result) => {
           const data = await result.json();
-          this.products = data
+          this.products = data;
         })
         .catch((err) => {
           this.error = err.toString();
