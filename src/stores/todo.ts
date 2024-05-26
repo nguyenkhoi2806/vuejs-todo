@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 
-import LocalStorage from "@/services/localStorage";
+import LocalStorage from "@/services/local-storage";
 
-import Todo from "../models/Todo";
+import Todo from "../models/todo";
 
 type TodoType = {
   todoList: Todo[];

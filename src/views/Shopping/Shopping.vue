@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      return fetch("https://fakestoreapi.com/products/?limit=9")
+      return fetch("https://fakestoreapi.com/products/?limit=12")
         .then(async (result) => {
           const data = await result.json();
           this.products = data;
@@ -35,23 +35,17 @@ export default {
 </script>
 
 <template>
-  <div class="bg-white">
+  <div class="mt-10">
+    <h2 class="text-2xl font-bold tracking-tight text-gray-900">My Products</h2>
     <div
-      class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+      class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-[30px]"
     >
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-        My Products
-      </h2>
       <div
-        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        v-for="product in products"
+        :key="product.id"
+        class="border-2 shadow-xl flex flex-col h-full rounded-xl text-gray-700"
       >
-        <div
-          v-for="product in products"
-          :key="product.id"
-          class="group relative"
-        >
-          <ProductCard :product="product" />
-        </div>
+        <ProductCard :product="product" />
       </div>
     </div>
   </div>
