@@ -4,9 +4,10 @@ import { defineAsyncComponent } from "vue";
 import {
   ROUTE_ABOUT_US,
   ROUTE_DASHBOARD,
+  ROUTE_PRODUCT_DETAIL,
   ROUTE_SHOPPING_CART,
 } from "@/constants/route";
-import About from "@/views/About/About.vue"
+import About from "@/views/About/About.vue";
 import NotFound from "@/views/NotFound/NotFound.vue";
 
 export default {
@@ -28,6 +29,14 @@ export default {
             new Promise((resolve, _) => {
               setTimeout(() => {
                 resolve(import("@/views/Shopping/Shopping.vue"));
+              });
+            }),
+        ),
+        [ROUTE_PRODUCT_DETAIL]: defineAsyncComponent(
+          () =>
+            new Promise((resolve, _) => {
+              setTimeout(() => {
+                resolve(import("@/views/Product/Product.vue"));
               });
             }),
         ),

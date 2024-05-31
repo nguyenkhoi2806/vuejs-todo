@@ -1,15 +1,18 @@
 <script>
+import Loading from '@/components/Loading/Loading.vue'
+
 import ProductCard from "./ProductCard.vue";
 
 export default {
   name: "Shopping",
   components: {
     ProductCard,
+    Loading
   },
   data() {
     return {
       products: [],
-      loading: false,
+      loading: true,
       error: null,
     };
   },
@@ -35,10 +38,11 @@ export default {
 </script>
 
 <template>
-  <div class="mt-10">
+  <div class="mt-10 ssm sm:mx-7 md:mx-7">
     <h2 class="text-2xl font-bold tracking-tight text-gray-900">My Products</h2>
+    <Loading v-if="loading" />
     <div
-      class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-[30px]"
+      class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-[30px]"
     >
       <div
         v-for="product in products"

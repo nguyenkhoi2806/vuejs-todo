@@ -3,7 +3,7 @@
     Hế lô hế lô, <span class="ongdev-text">Dev củi đêi!</span>
   </div>
   <div class="tagline">
-    Ghét code | Nghiện gym | Đừng như <span class="ongdev-text">Dev củi</span>
+    Mê code | Nghiện gym | Đừng như <span class="ongdev-text">Dev củi</span>
   </div>
 </template>
 
