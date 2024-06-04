@@ -62,5 +62,5 @@ export default {
 </script>
 
 <template>
-  <component :is="currentView" />
+  <router-view :is="currentView" />
 </template>

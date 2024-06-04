@@ -1,5 +1,5 @@
 <script>
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 import Product from "@/models/product";
 
@@ -8,13 +8,16 @@ export default {
   props: {
     product: Product,
   },
+  setup() {
+    const router = useRouter();
+    return {
+      router,
+    };
+  },
   methods: {
     goToProductDetails() {
-      const router = useRouter();
-      console.log(router)
-      router.push({
-        name: "/product/detail/" + this.product.id,
-      });
+      console.log(this.router);
+      this.router.push({ path: "/product/" + this.product.id });
     },
   },
 };

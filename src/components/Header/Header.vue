@@ -1,5 +1,6 @@
 <script>
 import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 
 import {
   ROUTE_ABOUT_US,
@@ -17,22 +18,27 @@ export default {
       },
     },
   },
+
   setup() {
     const store = useSettingStore();
     const { themeSelected } = storeToRefs(store);
-
+    const route = useRoute();
     return {
+      route,
       themeSelected,
     };
   },
-
   data() {
     return {
-      route: window.location.pathname,
       ROUTE_ABOUT_US,
       ROUTE_DASHBOARD,
       ROUTE_SHOPPING_CART,
     };
+  },
+  computed: {
+    path() {
+      return this.route.path;
+    },
   },
 };
 </script>
@@ -69,34 +75,36 @@ export default {
           class="container-fluid w-full flex flex-wrap items-center justify-between px-6"
         >
           <div class="collapse navbar-collapse flex-grow items-center">
-            <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto text-black">
+            <ul
+              class="navbar-nav flex flex-col pl-0 list-style-none mr-auto text-black"
+            >
               <li class="nav-item px-2">
-                <a
-                  class="nav-link"
-                  :class="route === ROUTE_DASHBOARD ? 'font-bold' : ''"
+                <router-link
+                  class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
+                  :class="path === ROUTE_DASHBOARD ? 'text-gray-900' : ''"
                   aria-current="page"
-                  :href="ROUTE_DASHBOARD"
+                  :to="ROUTE_DASHBOARD"
                 >
                   Dashboard
-                </a>
+                </router-link>
               </li>
               <li class="nav-item pr-2">
-                <a
+                <router-link
                   class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
-                  :href="ROUTE_SHOPPING_CART"
-                  :class="route === ROUTE_SHOPPING_CART ? 'font-bold' : ''"
+                  :to="ROUTE_SHOPPING_CART"
+                  :class="path === ROUTE_SHOPPING_CART ? 'text-gray-900' : ''"
                 >
                   Shopping
-                </a>
+                </router-link>
               </li>
               <li class="nav-item pr-2">
-                <a
+                <router-link
                   class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
-                  :href="ROUTE_ABOUT_US"
-                  :class="route === ROUTE_ABOUT_US ? 'font-bold' : ''"
+                  :to="ROUTE_ABOUT_US"
+                  :class="path === ROUTE_ABOUT_US ? 'text-gray-900' : ''"
                 >
                   About
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
