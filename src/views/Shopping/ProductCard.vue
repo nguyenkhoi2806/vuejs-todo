@@ -1,12 +1,12 @@
 <script>
 import { useRouter } from "vue-router";
 
-import Product from "@/models/product";
+import * as Prodduct from "@/models/product";
 
 export default {
   name: "ProductCard",
   props: {
-    product: Product,
+    product: Prodduct.Prodduct,
   },
   setup() {
     const router = useRouter();

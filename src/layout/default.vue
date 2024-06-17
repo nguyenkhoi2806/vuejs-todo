@@ -6,6 +6,12 @@ import Loading from "@/components/Loading/Loading.vue";
 export default {
   name: "Layout",
   components: { Loading, SlideBar, HeaderApp },
+  props: {
+    component: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       open: false,
@@ -14,12 +20,6 @@ export default {
   methods: {
     handleSlideBar() {
       this.open = !this.open;
-    },
-  },
-  props: {
-    component: {
-      type: Object,
-      required: true,
     },
   },
 };
