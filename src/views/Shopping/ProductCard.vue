@@ -16,8 +16,7 @@ export default {
   },
   methods: {
     goToProductDetails() {
-      console.log(this.router);
-      this.router.push({ path: "/product/" + this.product.id });
+      this.router.push({ name: "product", params: { id: this.product.id } });
     },
   },
 };

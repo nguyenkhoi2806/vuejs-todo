@@ -6,13 +6,11 @@ import { createPinia } from "pinia";
 import { createApp } from "vue";
 
 import App from "./App.vue";
-import router from "./routerApp";
+import router from "./router";
 
 const emitter = mitt();
-const app = createApp(App);
+const app = createApp(App).use(createPinia()).use(vClickOutside).use(router);
 
 app.config.globalProperties.eventBus = emitter;
-app.use(createPinia());
-app.use(vClickOutside);
-app.use(router);
+
 app.mount("#app");

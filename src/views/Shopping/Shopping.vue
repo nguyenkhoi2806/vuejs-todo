@@ -1,5 +1,5 @@
 <script>
-import Loading from '@/components/Loading/Loading.vue'
+import Loading from "@/components/Loading/Loading.vue";
 
 import ProductCard from "./ProductCard.vue";
 
@@ -7,7 +7,7 @@ export default {
   name: "Shopping",
   components: {
     ProductCard,
-    Loading
+    Loading,
   },
   data() {
     return {

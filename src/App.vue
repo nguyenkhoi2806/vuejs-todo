@@ -1,34 +1,14 @@
 <script>
-import "tw-elements";
-
-import HeaderApp from "@/components/Header/Header.vue";
-import Routing from "@/components/Routing/Routing.vue";
-import SlideBar from "@/components/SlideBar/SlideBar.vue";
-
-import Layout from "./layout/default.vue";
+import Layout from "@/components/Layout.vue";
 
 export default {
-  components: {
-    Layout,
-    SlideBar,
-    HeaderApp,
-    Routing,
-  },
+  name: "App",
+  components: { Layout },
 };
 </script>
 
 <template>
-  <Layout>
-    <template #slide-bar="{ onClose, open }">
-      <SlideBar :on-close="onClose" :open="open" />
-    </template>
-    <template #header="{ openSlide }">
-      <HeaderApp :open-slide="openSlide" />
-    </template>
-    <template #body>
-      <div class="container mx-auto">
-        <Routing />
-      </div>
-    </template>
-  </Layout>
+  <router-view v-slot="{ Component }">
+    <Layout :component="Component" />
+  </router-view>
 </template>

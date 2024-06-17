@@ -1,10 +1,11 @@
 <script>
-import Loading from "@/components/Loading/Loading.vue";
+import Loading from "./Loading/Loading.vue";
+import SlideBar from "./SlideBar/SlideBar.vue";
+import HeaderApp from "@/components/Header/Header.vue";
+
 export default {
   name: "Layout",
-  components: {
-    Loading,
-  },
+  components: { Loading, SlideBar, HeaderApp },
   data() {
     return {
       open: false,
@@ -15,18 +16,26 @@ export default {
       this.open = !this.open;
     },
   },
+  props: {
+    Component: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 
 <template>
-  <slot name="slide-bar" :on-close="handleSlideBar" :open="open"></slot>
-  <slot name="header" :open-slide="handleSlideBar"></slot>
-  <Suspense>
-    <template #default>
-      <slot name="body"></slot>
-    </template>
-    <template #fallback>
-      <Loading />
-    </template>
-  </Suspense>
+  <div>
+    <SlideBar :on-close="handleSlideBar" :open="open" />
+    <HeaderApp :open-slide="handleSlideBar" />
+    <suspense timeout="0">
+      <template #default>
+        <component :is="Component" :key="$route.path"></component>
+      </template>
+      <template #fallback>
+        <Loading />
+      </template>
+    </suspense>
+  </div>
 </template>
