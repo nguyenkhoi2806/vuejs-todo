@@ -1,8 +1,4 @@
-import {
-  createMemoryHistory,
-  createRouter,
-  createWebHistory,
-} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 import AboutView from "@/views/About/About.vue";
 import DashboardView from "@/views/Dashboard/Dashboard.vue";
@@ -19,22 +15,22 @@ import {
 const routes = [
   {
     path: ROUTE_DASHBOARD,
-    name: "Home",
+    name: "home",
     component: DashboardView,
   },
   {
     path: ROUTE_ABOUT_US,
-    name: "About",
+    name: "about",
     component: AboutView,
   },
   {
     path: ROUTE_SHOPPING_CART,
-    name: "Shopping-cart",
+    name: "shopping-cart",
     component: ShoppingView,
   },
   {
     path: ROUTE_PRODUCT_DETAIL,
-    name: "Product",
+    name: "product",
     component: ProductView,
   },
 ];

@@ -1,7 +1,7 @@
 <script>
-import Loading from "./Loading/Loading.vue";
 import SlideBar from "./SlideBar/SlideBar.vue";
-import HeaderApp from "@/components/Header/Header.vue";
+import HeaderApp from "./Header/Header.vue";
+import Loading from "@/components/Loading/Loading.vue";
 
 export default {
   name: "Layout",
@@ -17,7 +17,7 @@ export default {
     },
   },
   props: {
-    Component: {
+    component: {
       type: Object,
       required: true,
     },
@@ -31,7 +31,7 @@ export default {
     <HeaderApp :open-slide="handleSlideBar" />
     <suspense timeout="0">
       <template #default>
-        <component :is="Component" :key="$route.path"></component>
+        <component :is="component" :key="$route.path"></component>
       </template>
       <template #fallback>
         <Loading />

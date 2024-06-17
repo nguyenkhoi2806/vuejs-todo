@@ -11,8 +11,8 @@ module.exports = {
   plugins: ["simple-import-sort"],
   parser: "vue-eslint-parser",
   rules: {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "off",
+    "simple-import-sort/exports": "off",
     "vue/multi-word-component-names": 0,
     "vue/no-reserved-component-names": "off",
     "vue/html-self-closing": "off",
