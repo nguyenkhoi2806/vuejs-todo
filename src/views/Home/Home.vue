@@ -43,7 +43,19 @@ export default {
 </script>
 
 <template>
-  <h2 class="text-2xl font-bold tracking-tight text-gray-900">My Products</h2>
+  <div class="flex justify-between items-center w-full">
+    <h2 class="text-2xl font-bold tracking-tight text-gray-900">My Products</h2>
+    <a class="pl-3 inline-block no-underline hover:text-black" href="#">
+      <svg
+        class="fill-current hover:text-black"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24">
+        <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
+      </svg>
+    </a>
+  </div>
   <div
     class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-[30px]">
     <div
@@ -58,7 +70,7 @@ export default {
   </div>
   <div v-if="products.length > 0" class="flex justify-center w-full mt-10">
     <Button
-      class="border rounded p-3 text-black hover:border-red-500"
+      class="border rounded p-3 text-black hover:border-red-500 w-[200px]"
       @click="fetchData">
       Show more
     </Button>
