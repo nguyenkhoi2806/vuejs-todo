@@ -38,8 +38,10 @@ export default {
 </script>
 
 <template>
-  <section class="text-gray-700 body-font overflow-hidden bg-white">
+  <div class="flex items-center justify-center w-full">
     <Loading v-if="loading" />
+  </div>
+  <section class="text-gray-700 body-font overflow-hidden bg-white">
     <div v-if="product && !loading" class="container px-5 py-24 mx-auto">
       <div class="lg:w-4/5 mx-auto flex flex-wrap">
         <div
