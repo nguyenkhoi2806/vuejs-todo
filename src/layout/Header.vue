@@ -46,7 +46,7 @@ export default {
               <RouterLink to="/about">
                 <a
                   class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-                  >About
+                  >About me
                 </a>
               </RouterLink>
             </li>
