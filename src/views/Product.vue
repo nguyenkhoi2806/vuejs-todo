@@ -1,7 +1,7 @@
 <script>
 import * as Product from "@/models/product";
 
-import Loading from "@/components/Loading/Loading.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "Product",

@@ -1,6 +1,6 @@
 <script>
-import Loading from "@/components/Loading/Loading.vue";
-import Button from "@/components/Button/Button.vue";
+import Loading from "@/components/Loading.vue";
+import Button from "@/components/Button.vue";
 
 import ProductCard from "./ProductCard.vue";
 
