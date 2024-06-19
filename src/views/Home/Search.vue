@@ -34,7 +34,7 @@ export default {
       type="button"
       class="mr-2 border text-black p-3 rounded leading-none flex items-center"
       :value="category"
-      :class="{ 'border-black': categorySelected === category }"
+      :class="{ 'border-gray-400': categorySelected === category }"
       @click="selectCategory(category)">
       {{ category }}
     </button>
