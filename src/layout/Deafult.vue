@@ -12,23 +12,12 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      open: false,
-    };
-  },
-  methods: {
-    handleSlideBar() {
-      this.open = !this.open;
-    },
-  },
 };
 </script>
 
 <template>
   <div>
-    <SlideBar :on-close="handleSlideBar" :open="open" />
-    <HeaderApp :open-slide="handleSlideBar" />
+    <HeaderApp />
     <section class="bg-white py-8">
       <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
         <nav id="store" class="w-full z-30 top-0 px-6 py-1">
