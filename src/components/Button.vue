@@ -21,7 +21,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <button class="font-bold px-2 py-2 rounded w-1/12" @click="click">
+  <button
+    class="font-bold px-2 py-2 rounded w-full border hover:border-black"
+    @click="click">
     {{ label }}
     <slot></slot>
   </button>

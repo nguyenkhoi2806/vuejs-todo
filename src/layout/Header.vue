@@ -72,7 +72,9 @@ export default {
       </div>
 
       <div class="order-2 md:order-3 flex items-center">
-        <RouterLink to="/" class="inline-block no-underline hover:text-black">
+        <RouterLink
+          to="/login"
+          class="inline-block no-underline hover:text-black">
           <svg
             class="fill-current hover:text-black"
             xmlns="http://www.w3.org/2000/svg"
