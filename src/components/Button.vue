@@ -22,7 +22,7 @@ export default defineComponent({
 
 <template>
   <button
-    class="font-bold px-2 py-2 rounded w-full border hover:border-black"
+    class="font-bold px-2 py-2 rounded w-full border hover:border-black disabled:cursor-not-allowed"
     @click="click">
     {{ label }}
     <slot></slot>
