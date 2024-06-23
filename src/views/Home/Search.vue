@@ -1,8 +1,7 @@
 <script>
 export default {
   name: "Search",
-  components: {},
-  data: function () {
+  data() {
     return {
       categories: [],
       categorySelected: "All",
@@ -14,18 +13,23 @@ export default {
   methods: {
     selectCategory(category) {
       this.categorySelected = category;
+      this.$emit("category-selected", category);
     },
     async fetchCategory() {
-      return fetch("https://fakestoreapi.com/products/categories").then(
-        async (result) => {
-          const data = await result.json();
-          this.categories = ["All"].concat(data);
-        },
-      );
+      try {
+        const result = await fetch(
+          "https://fakestoreapi.com/products/categories",
+        );
+        const data = await result.json();
+        this.categories = ["All"].concat(data);
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
 };
 </script>
+
 <template>
   <div class="flex">
     <button
@@ -33,7 +37,6 @@ export default {
       :key="category"
       type="button"
       class="mr-2 border text-black p-3 rounded leading-none flex items-center"
-      :value="category"
       :class="{ 'border-gray-400': categorySelected === category }"
       @click="selectCategory(category)">
       {{ category }}

@@ -18,27 +18,44 @@ export default {
       products: [],
       loading: false,
       error: null,
-      limit: 0,
+      limit: 12,
+      category: null,
     };
   },
   created() {
     this.fetchData();
   },
   methods: {
-    async fetchData() {
+    async fetchData(isShowMore = false) {
       this.loading = true;
+      if (!isShowMore) {
+        this.products = [];
+        this.limit = 12;
+      }
+      const url = this.buildUrl();
+      try {
+        const result = await fetch(url);
+        const data = await result.json();
+        this.products = [...data];
+      } catch (err) {
+        this.error = err.toString();
+      } finally {
+        this.loading = false;
+      }
+    },
+    buildUrl() {
+      if (this.category && this.category !== "All") {
+        return `https://fakestoreapi.com/products/category/${this.category}?limit=${this.limit}`;
+      }
+      return `https://fakestoreapi.com/products?limit=${this.limit}`;
+    },
+    updateCategory(newCategory) {
+      this.category = newCategory;
+      this.fetchData();
+    },
+    showMore() {
       this.limit += 12;
-      return fetch(`https://fakestoreapi.com/products/?limit=${this.limit}`)
-        .then(async (result) => {
-          const data = await result.json();
-          this.products = [...data];
-        })
-        .catch((err) => {
-          this.error = err.toString();
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.fetchData(true);
     },
   },
 };
@@ -47,7 +64,7 @@ export default {
 <template>
   <div class="flex justify-between items-center w-full">
     <h2 class="text-2xl font-bold tracking-tight text-gray-900">My Products</h2>
-    <Search />
+    <Search @category-selected="updateCategory" />
   </div>
   <div
     class="mt-6 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-[30px]">
@@ -64,7 +81,7 @@ export default {
   <div v-if="products.length > 0" class="flex justify-center w-full mt-10">
     <Button
       class="border rounded p-3 text-black hover:border-red-500 w-[200px]"
-      @click="fetchData">
+      @click="showMore">
       Show more
     </Button>
   </div>
